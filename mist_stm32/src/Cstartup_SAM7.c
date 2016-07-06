@@ -17,6 +17,7 @@
 // Include the board file description
 #include "AT91SAM7S256.h"
 
+#if !defined MIST_STM32
 // The following functions must be write in ARM mode this function called directly
 // by exception vector
 extern void AT91F_Spurious_handler(void);
@@ -81,3 +82,4 @@ void AT91F_LowLevelInit( void)
 
 }
 
+#endif

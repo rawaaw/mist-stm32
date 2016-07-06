@@ -29,6 +29,7 @@ uint8_t rstval = 0;
 
 void __init_hardware(void)
 {
+#if !defined MIST_STM32
     *AT91C_WDTC_WDMR = AT91C_WDTC_WDDIS; // disable watchdog
     *AT91C_RSTC_RMR = (0xA5 << 24) | AT91C_RSTC_URSTEN;   // enable external user reset input
     *AT91C_MC_FMR = FWS << 8; // Flash wait states
@@ -108,6 +109,7 @@ void __init_hardware(void)
 
     // Enable peripheral clock in the PMC
     AT91C_BASE_PMC->PMC_PCER = 1 << AT91C_ID_PIOA;
+#endif
 }
 
 void hexdump(void *data, uint16_t size, uint16_t offset) {
@@ -140,6 +142,7 @@ volatile static unsigned char rx_buf[256];
 volatile static unsigned char rx_rptr, rx_wptr;
 
 void Usart0IrqHandler(void) {
+#if !defined MIST_STM32
   // Read USART status
   unsigned char status = AT91C_BASE_US0->US_CSR;
 
@@ -166,6 +169,7 @@ void Usart0IrqHandler(void) {
       // nothing else to send, disable interrupt
       AT91C_BASE_US0->US_IDR = AT91C_US_TXRDY;
   }
+#endif
 }
 
 // check usart rx buffer for data
@@ -192,6 +196,7 @@ void USART_Poll(void) {
 }
 
 void USART_Write(unsigned char c) {
+#if !defined MIST_STM32
 #if 0
   while(!(AT91C_BASE_US0->US_CSR & AT91C_US_TXRDY));
   AT91C_BASE_US0->US_THR = c;
@@ -209,9 +214,11 @@ void USART_Write(unsigned char c) {
 
   AT91C_BASE_US0->US_IER = AT91C_US_TXRDY;  // enable interrupt
 #endif
+#endif
 }
 
 void USART_Init(unsigned long baudrate) {
+#if !defined MIST_STM32
     // Configure PA5 and PA6 for USART0 use
     AT91C_BASE_PIOA->PIO_PDR = AT91C_PA5_RXD0 | AT91C_PA6_TXD0;
 
@@ -242,25 +249,31 @@ void USART_Init(unsigned long baudrate) {
     AT91C_BASE_AIC->AIC_IECR = (1<<AT91C_ID_US0);
 
     AT91C_BASE_US0->US_IER = AT91C_US_RXRDY;  // enable rx interrupt
+#endif
 }
 
 unsigned long CheckButton(void)
 {
+#if !defined MIST_STM32
 #ifdef BUTTON
     return((~*AT91C_PIOA_PDSR) & BUTTON);
 #else
     return user_io_menu_button();
 #endif
+#endif
 }
 
 void timer0_c_irq_handler(void) {
+#if !defined MIST_STM32
   //* Acknowledge interrupt status
   unsigned int dummy = AT91C_BASE_TC0->TC_SR;
 
   ikbd_update_time();
+#endif
 }
 
 void Timer_Init(void) {  
+#if !defined MIST_STM32
   unsigned int dummy;
 
   //* Open timer0
@@ -299,21 +312,30 @@ void Timer_Init(void) {
   AT91C_BASE_TC0->TC_CCR = AT91C_TC_SWTRG ;
   
   *AT91C_PITC_PIMR = AT91C_PITC_PITEN | ((MCLK / 16 / 1000 - 1) & AT91C_PITC_PIV); // counting period 1ms
+#endif
 }
 
 // 12 bits accuracy at 1ms = 4096 ms 
 unsigned long GetTimer(unsigned long offset)
 {
+#if !defined MIST_STM32
     unsigned long systimer = (*AT91C_PITC_PIIR & AT91C_PITC_PICNT);
     systimer += offset << 20;
     return (systimer); // valid bits [31:20]
+#else
+    return 0;
+#endif
 }
 
 unsigned long CheckTimer(unsigned long time)
 {
+#if !defined MIST_STM32
     unsigned long systimer = (*AT91C_PITC_PIIR & AT91C_PITC_PICNT);
     time -= systimer;
     return(time > (1UL << 31));
+#else
+    return 0;
+#endif
 }
 
 void WaitTimer(unsigned long time)
@@ -327,10 +349,18 @@ void TIMER_wait(unsigned long ms) {
 }
 
 char mmc_inserted() {
+#if !defined MIST_STM32
   return !(*AT91C_PIOA_PDSR & SD_CD);
+#else
+  return 0;
+#endif
 }
 
 char mmc_write_protected() {
+#if !defined MIST_STM32
   return (*AT91C_PIOA_PDSR & SD_WP);
+#else
+  return 0;
+#endif
 }
 

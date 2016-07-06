@@ -59,25 +59,40 @@ void spi_uio_cmd8_cont(unsigned char cmd, unsigned char parm);
 void spi_uio_cmd32(unsigned char cmd, unsigned long parm);
   
 /* spi functions for max3421 */
+#if !defined MIST_STM32
 #define spi_max_start()  { *AT91C_PIOA_CODR = USB_SEL; }
 #define spi_max_end()    {  spi_wait4xfer_end(); *AT91C_PIOA_SODR = USB_SEL; }
+#else
+#define spi_max_start()  {}
+#define spi_max_end()    {}
+#endif
 
 static inline unsigned char SPI(unsigned char outByte) {
+#if !defined MIST_STM32
   while (!(*AT91C_SPI_SR & AT91C_SPI_TDRE));
   *AT91C_SPI_TDR = outByte;
   while (!(*AT91C_SPI_SR & AT91C_SPI_RDRF));
   return((unsigned char)*AT91C_SPI_RDR);
+#else
+  return 0;
+#endif
 }
 
 static inline unsigned char SPI_READ() {
+#if !defined MIST_STM32
   *AT91C_SPI_TDR = 0;
   while (!(*AT91C_SPI_SR & AT91C_SPI_RDRF));
   return((unsigned char)*AT91C_SPI_RDR);
+#else
+  return 0;
+#endif
 }
 
 static inline void SPI_WRITE(unsigned char outByte) {
+#if !defined MIST_STM32
   while (!(*AT91C_SPI_SR & AT91C_SPI_TDRE));
   *AT91C_SPI_TDR = outByte;
+#endif
 }
 
 #define SPI_SDC_CLK_VALUE 2     // 24 Mhz

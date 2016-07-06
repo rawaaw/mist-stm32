@@ -71,7 +71,9 @@ void xmodem_rx_byte(unsigned char byte) {
     // idle state
   case IDLE:
     if((byte == 'r') || (byte == 'R')) {    // _R_eset
+#if !defined MIST_STM32
       *AT91C_RSTC_RCR = 0xA5 << 24 | AT91C_RSTC_PERRST | AT91C_RSTC_PROCRST; // restart
+#endif
       for(;;);
     }
 

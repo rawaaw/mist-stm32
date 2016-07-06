@@ -192,8 +192,10 @@ AT91S_CDC_LINE_CODING line = {
 static void AT91F_CDC_Enumerate(void);
 
 static void tx(char c) {
+#if !defined MIST_STM32
   while(!(AT91C_BASE_US0->US_CSR & AT91C_US_TXRDY));
   AT91C_BASE_US0->US_THR = c;
+#endif
 }
 
 static void tx_str(char *str) {
@@ -216,6 +218,7 @@ static void tx_hex(char *str, unsigned int num) {
 }
 
 static void usb_irq_handler(void) {
+#if !defined MIST_STM32
   AT91_REG isr = AT91C_BASE_UDP->UDP_ISR & AT91C_BASE_UDP->UDP_IMR;
 
   //  tx_hex("i: ", isr);
@@ -246,6 +249,7 @@ static void usb_irq_handler(void) {
 
   // clear all remaining irqs
   AT91C_BASE_UDP->UDP_ICR = AT91C_BASE_UDP->UDP_ISR;
+#endif
 }
 
 //*----------------------------------------------------------------------------
@@ -253,6 +257,7 @@ static void usb_irq_handler(void) {
 //* \brief
 //*----------------------------------------------------------------------------
 void usb_cdc_open(void) {
+#if !defined MIST_STM32
   // Set the PLL USB Divider
   AT91C_BASE_CKGR->CKGR_PLLR |= AT91C_CKGR_USBDIV_1 ;
   
@@ -273,6 +278,7 @@ void usb_cdc_open(void) {
   AT91C_AIC_SMR[AT91C_ID_UDP] = AT91C_AIC_SRCTYPE_INT_HIGH_LEVEL | 4;
   AT91C_AIC_SVR[AT91C_ID_UDP] = (unsigned int)usb_irq_handler;
   *AT91C_AIC_IECR = (1 << AT91C_ID_UDP);
+#endif
 }
 
 //*----------------------------------------------------------------------------
@@ -280,7 +286,11 @@ void usb_cdc_open(void) {
 //* \brief Test if the device is configured
 //*----------------------------------------------------------------------------
 uchar usb_cdc_is_configured(void) {
+#if !defined MIST_STM32
   return AT91C_BASE_UDP->UDP_GLBSTATE & AT91C_UDP_CONFG;
+#else
+  return 0;
+#endif
 }
 
 //*----------------------------------------------------------------------------
@@ -293,6 +303,7 @@ uint16_t usb_cdc_read(char *pData, uint16_t length) {
   if ( !usb_cdc_is_configured() )
     return 0;
 
+#if !defined MIST_STM32
   if ( AT91C_BASE_UDP->UDP_CSR[AT91C_EP_OUT] & currentRcvBank ) {
     packetSize = MIN(AT91C_BASE_UDP->UDP_CSR[AT91C_EP_OUT] >> 16, length);
     length -= packetSize;
@@ -311,6 +322,7 @@ uint16_t usb_cdc_read(char *pData, uint16_t length) {
     else
       currentRcvBank = AT91C_UDP_RX_DATA_BK0;
   }
+#endif
 
   return nbBytesRcv;
 }
@@ -323,6 +335,7 @@ uint16_t usb_cdc_read(char *pData, uint16_t length) {
 static void wait4tx(char ep) {
   long to = GetTimer(2);  // wait max 2ms for tx to succeed
   
+#if !defined MIST_STM32
   // wait for host to acknowledge data reception
   while ( !(AT91C_BASE_UDP->UDP_CSR[ep] & AT91C_UDP_TXCOMP) ) 
     if(CheckTimer(to)) return;
@@ -332,6 +345,7 @@ static void wait4tx(char ep) {
 
   // wait for register clear to succeed
   while (AT91C_BASE_UDP->UDP_CSR[ep] & AT91C_UDP_TXCOMP);
+#endif
 }
 
 // copy bytes to the endpoint fifo and start transmission
@@ -339,9 +353,11 @@ static uint ep_tx(char ep, const char *pData, uint length) {
   uint b2c = MIN(length, ep?AT91C_EP_IN_SIZE:8);
   uint retval = b2c;
 
+#if !defined MIST_STM32
   // copy all bytes into send buffer
   while (b2c--) AT91C_BASE_UDP->UDP_FDR[ep] = *pData++;
   AT91C_BASE_UDP->UDP_CSR[ep] |= AT91C_UDP_TXPKTRDY;
+#endif
 
   return retval;
 }
@@ -366,6 +382,7 @@ uint usb_cdc_write(const char *pData, uint length) {
 //* \brief Send Data through the control endpoint
 //*----------------------------------------------------------------------------
 static void AT91F_USB_SendData(const char *pData, uint length) {
+#if !defined MIST_STM32
   AT91_REG csr;
 
   do {
@@ -393,6 +410,7 @@ static void AT91F_USB_SendData(const char *pData, uint length) {
     while (AT91C_BASE_UDP->UDP_CSR[0] & AT91C_UDP_TXCOMP);
 
   } while (length);
+#endif
 }
 
 static void AT91F_USB_SendStr(const char *str, uint max) {
@@ -416,8 +434,10 @@ static void AT91F_USB_SendStr(const char *str, uint max) {
 //* \brief Send zero length packet through the control endpoint
 //*----------------------------------------------------------------------------
 void AT91F_USB_SendZlp() {
+#if !defined MIST_STM32
   AT91C_BASE_UDP->UDP_CSR[0] |= AT91C_UDP_TXPKTRDY;
   wait4tx(0);
+#endif
 }
 
 //*----------------------------------------------------------------------------
@@ -425,10 +445,12 @@ void AT91F_USB_SendZlp() {
 //* \brief Stall the control endpoint
 //*----------------------------------------------------------------------------
 static void AT91F_USB_SendStall() {
+#if !defined MIST_STM32
   AT91C_BASE_UDP->UDP_CSR[0] |= AT91C_UDP_FORCESTALL;
   while ( !(AT91C_BASE_UDP->UDP_CSR[0] & AT91C_UDP_ISOERROR) );
   AT91C_BASE_UDP->UDP_CSR[0] &= ~(AT91C_UDP_FORCESTALL | AT91C_UDP_ISOERROR);
   while (AT91C_BASE_UDP->UDP_CSR[0] & (AT91C_UDP_FORCESTALL | AT91C_UDP_ISOERROR));
+#endif
 }
 
 //*----------------------------------------------------------------------------
@@ -444,6 +466,7 @@ static void AT91F_CDC_Enumerate(void) {
   uchar bmRequestType, bRequest, bConf;
   ushort wValue, wIndex, wLength, wStatus;
 
+#if !defined MIST_STM32
   //  tx_hex("1: ", AT91C_BASE_UDP->UDP_CSR[0]);
 
   // setup packet available?
@@ -577,4 +600,5 @@ static void AT91F_CDC_Enumerate(void) {
     AT91F_USB_SendStall();
     break;
   }
+#endif
 }

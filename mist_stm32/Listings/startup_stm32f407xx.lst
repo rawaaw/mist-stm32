@@ -882,15 +882,15 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\startup_stm32f407xx.d -o.\objects\startup_stm32f407xx
-.o -ID:\users\andrew\fpga\projects\cypress\AN45471\mist_stm32\RTE -ID:\users\an
-drew\fpga\projects\cypress\AN45471\mist_stm32\RTE\Device\STM32F407VETx -Id:\app
-s\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Driver\Include -Id:\apps\Keil_v5
-\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include -Id:\apps\Keil_v5\ARM\PACK\Keil\M
-DK-Middleware\7.1.0\Board -Id:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\D
-rivers\CMSIS\Device\ST\STM32F4xx\Include -Id:\apps\Keil_v5\ARM\PACK\Keil\STM32F
-4xx_DFP\2.9.0\Drivers\STM32F4xx_HAL_Driver\Inc --predefine="__UVISION_VERSION S
-ETA 520" --predefine="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=.\l
-istings\startup_stm32f407xx.lst RTE\Device\STM32F407VETx\startup_stm32f407xx.s
+.o -IC:\user\andrew\cypress\mist-stm32\mist_stm32\RTE -IC:\user\andrew\cypress\
+mist-stm32\mist_stm32\RTE\Device\STM32F407VETx -IC:\APPS\Keil_v5\ARM\PACK\ARM\C
+MSIS\5.0.0-Beta4\CMSIS\Driver\Include -IC:\APPS\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.
+0-Beta4\CMSIS\Include -IC:\APPS\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.1.0\Boar
+d -IC:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\S
+TM32F4xx\Include -IC:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\ST
+M32F4xx_HAL_Driver\Inc --predefine="__UVISION_VERSION SETA 520" --predefine="_R
+TE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=.\listings\startup_stm32f40
+7xx.lst RTE\Device\STM32F407VETx\startup_stm32f407xx.s
 
 
 

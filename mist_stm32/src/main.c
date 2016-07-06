@@ -131,7 +131,11 @@ int main(void)
 
     // TODO: If MMC fails try to wait for USB storage
 
+#if !defined MIST_STM32
     tmp = MCLK / ((AT91C_SPI_CSR[0] & AT91C_SPI_SCBR) >> 8) / 1000000;
+#else
+    tmp = -1;
+#endif
     iprintf("spiclk: %u MHz\r", tmp);
 
     usb_init();

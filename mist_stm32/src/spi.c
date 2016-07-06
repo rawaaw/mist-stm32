@@ -2,6 +2,7 @@
 #include "hardware.h"
 
 void spi_init() {
+#if !defined MIST_STM32
     // Enable the peripheral clock in the PMC
     AT91C_BASE_PMC->PMC_PCER = 1 << AT91C_ID_SPI;
 
@@ -16,67 +17,91 @@ void spi_init() {
 
     // Configure pins for SPI use
     AT91C_BASE_PIOA->PIO_PDR = AT91C_PA14_SPCK | AT91C_PA13_MOSI | AT91C_PA12_MISO;
+#endif
 }
 
 RAMFUNC void spi_wait4xfer_end() {
+#if !defined MIST_STM32
   while (!(*AT91C_SPI_SR & AT91C_SPI_TXEMPTY));
   
   /* Clear any data left in the receiver */
   (void)*AT91C_SPI_RDR;
   (void)*AT91C_SPI_RDR;
+#endif
 }
 
 void EnableFpga()
 {
+#if !defined MIST_STM32
     *AT91C_PIOA_CODR = FPGA0;  // clear output
+#endif
 }
 
 void DisableFpga()
 {
+#if !defined MIST_STM32
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA0;  // set output
+#endif
 }
 
 void EnableOsd()
 {
+#if !defined MIST_STM32
     *AT91C_PIOA_CODR = FPGA1;  // clear output
+#endif
 }
 
 void DisableOsd()
 {
+#if !defined MIST_STM32
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA1;  // set output
+#endif
 }
 
 void EnableIO() {
+#if !defined MIST_STM32
     *AT91C_PIOA_CODR = FPGA3;  // clear output
+#endif
 }
 
 void DisableIO() {
+#if !defined MIST_STM32
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA3;  // set output
+#endif
 }
 
 void EnableDMode() {
+#if !defined MIST_STM32
   *AT91C_PIOA_CODR = FPGA2;    // enable FPGA2 output
+#endif
 }
 
 void DisableDMode() {
+#if !defined MIST_STM32
   *AT91C_PIOA_SODR = FPGA2;    // disable FPGA2 output
+#endif
 }
 
 RAMFUNC void EnableCard() {
+#if !defined MIST_STM32
   *AT91C_PIOA_CODR = MMC_SEL;  // clear output (MMC chip select enabled)
+#endif
 }
 
 RAMFUNC void DisableCard() {
+#if !defined MIST_STM32
   spi_wait4xfer_end();
   *AT91C_PIOA_SODR = MMC_SEL;  // set output (MMC chip select disabled)
   SPI(0xFF);
   spi_wait4xfer_end();
+#endif
 }
 
 void spi_block(unsigned short num) {
+#if !defined MIST_STM32
   unsigned short i;
   unsigned long t;
 
@@ -86,9 +111,11 @@ void spi_block(unsigned short num) {
   }
   while (!(*AT91C_SPI_SR & AT91C_SPI_TXEMPTY)); // wait for transfer end
   t = *AT91C_SPI_RDR; // dummy read to empty receiver buffer for new data
+#endif
 }
 
 RAMFUNC void spi_read(char *addr, uint16_t len) {
+#if !defined MIST_STM32
   *AT91C_PIOA_SODR = AT91C_PA13_MOSI; // set GPIO output register
   *AT91C_PIOA_OER = AT91C_PA13_MOSI;  // GPIO pin as output
   *AT91C_PIOA_PER = AT91C_PA13_MOSI;  // enable GPIO function
@@ -106,6 +133,7 @@ RAMFUNC void spi_read(char *addr, uint16_t len) {
   *AT91C_SPI_PTCR = AT91C_PDC_RXTDIS | AT91C_PDC_TXTDIS; // disable transmitter and receiver
 
   *AT91C_PIOA_PDR = AT91C_PA13_MOSI; // disable GPIO function
+#endif
 }
 
 RAMFUNC void spi_block_read(char *addr) {
@@ -113,6 +141,7 @@ RAMFUNC void spi_block_read(char *addr) {
 }
 
 void spi_write(char *addr, uint16_t len) {
+#if !defined MIST_STM32
   // use SPI PDC (DMA transfer)
   *AT91C_SPI_TPR = (unsigned long)addr;
   *AT91C_SPI_TCR = len;
@@ -122,6 +151,7 @@ void spi_write(char *addr, uint16_t len) {
   // wait for tranfer end
   while (!(*AT91C_SPI_SR & AT91C_SPI_ENDTX));
   *AT91C_SPI_PTCR = AT91C_PDC_TXTDIS; // disable transmitter
+#endif
 }
 
 void spi_block_write(char *addr) {
@@ -129,17 +159,23 @@ void spi_block_write(char *addr) {
 }
 
 void spi_slow() {
+#if !defined MIST_STM32
   AT91C_SPI_CSR[0] = AT91C_SPI_CPOL | (SPI_SLOW_CLK_VALUE << 8) | (2 << 24); // init clock 100-400 kHz
+#endif
 }
 
 void spi_fast() {
+#if !defined MIST_STM32
   // set appropriate SPI speed for SD/SDHC card (max 25 Mhz)
   AT91C_SPI_CSR[0] = AT91C_SPI_CPOL | (SPI_SDC_CLK_VALUE << 8); // 24 MHz SPI clock
+#endif
 }
 
 void spi_fast_mmc() {
+#if !defined MIST_STM32
   // set appropriate SPI speed for MMC card (max 20Mhz)
   AT91C_SPI_CSR[0] = AT91C_SPI_CPOL | (SPI_MMC_CLK_VALUE << 8); // 16 MHz SPI clock
+#endif
 }
 
 /* generic helper */

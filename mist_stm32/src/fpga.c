@@ -376,6 +376,12 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
 }
 #endif
 
+#if defined MIST_STM32
+RAMFUNC unsigned char ConfigureFpga(char *name){
+  return 0;
+}
+#endif
+
 
 void SendFile(RAFile *file)
 {

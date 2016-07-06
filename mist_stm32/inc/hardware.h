@@ -13,6 +13,8 @@
 #define MCLK 48000000
 #define FWS 1 // Flash wait states
 
+#if !defined MIST_STM32
+
 #define DISKLED       AT91C_PIO_PA29
 #define DISKLED_ON    *AT91C_PIOA_CODR = DISKLED;
 #define DISKLED_OFF   *AT91C_PIOA_SODR = DISKLED;
@@ -63,6 +65,31 @@
 #define FPGA3         AT91C_PIO_PA9   // same as ALTERA_DATA0
 
 #define VBL           AT91C_PIO_PA7
+
+#else  /* MIST_STM32 */
+
+#define DISKLED
+#define DISKLED_ON
+#define DISKLED_OFF
+
+#define JOY1_UP        0
+#define JOY1_DOWN      0
+#define JOY1_LEFT      0
+#define JOY1_RIGHT     0
+#define JOY1_BTN1      0
+#define JOY1_BTN2      0
+#define JOY1  (JOY1_UP|JOY1_DOWN|JOY1_LEFT|JOY1_RIGHT|JOY1_BTN1|JOY1_BTN2)
+
+#define JOY0_UP        0
+#define JOY0_DOWN      0
+#define JOY0_LEFT      0
+#define JOY0_RIGHT     0
+#define JOY0_BTN1      0
+#define JOY0_BTN2      0
+#define JOY0  (JOY0_UP|JOY0_DOWN|JOY0_LEFT|JOY0_RIGHT|JOY0_BTN1|JOY0_BTN2)
+
+
+#endif /* MIST_STM32 */
 
 char mmc_inserted(void);
 void USART_Init(unsigned long baudrate);

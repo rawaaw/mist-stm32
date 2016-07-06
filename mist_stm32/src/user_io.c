@@ -49,8 +49,10 @@ static char core_type_8bit_with_config_string = 0;
 
 // permanent state of adc inputs used for dip switches
 static unsigned char adc_state = 0;
+#if !defined MIST_STM32
 AT91PS_ADC a_pADC = AT91C_BASE_ADC;
 AT91PS_PMC a_pPMC = AT91C_BASE_PMC;
+#endif
 
 // keep state of caps lock
 static char caps_lock_toggle = 0;
@@ -75,6 +77,7 @@ char user_io_osd_is_visible() {
 }
 
 static void PollOneAdc() {
+#if !defined MIST_STM32
   static unsigned char adc_cnt = 0xff;
 
   // fetch result from previous run
@@ -102,9 +105,11 @@ static void PollOneAdc() {
   
   // Start conversion
   AT91C_BASE_ADC->ADC_CR = AT91C_ADC_START;
+#endif
 }
 
 static void InitADC(void) {
+#if !defined MIST_STM32
   // Enable clock for interface
   AT91C_BASE_PMC->PMC_PCER = 1 << AT91C_ID_ADC;
 
@@ -120,6 +125,7 @@ static void InitADC(void) {
   PollOneAdc();
   PollOneAdc();
   PollOneAdc();
+#endif
 }
 
 // poll one adc channel every 25ms
@@ -757,7 +763,9 @@ void user_io_poll() {
 	}
 
 	// reset io controller to cope with new core
+#if !defined MIST_STM32
 	*AT91C_RSTC_RCR = 0xA5 << 24 | AT91C_RSTC_PERRST | AT91C_RSTC_PROCRST; // restart
+#endif
 	for(;;);
       }
     }
@@ -824,8 +832,13 @@ void user_io_poll() {
 
   // poll db9 joysticks
   static int joy0_state = JOY0;
+#if !defined MIST_STM32
   if((*AT91C_PIOA_PDSR & JOY0) != joy0_state) {
     joy0_state = *AT91C_PIOA_PDSR & JOY0;
+#else
+  if (0) {
+    joy0_state = 0;
+#endif
     
     unsigned char joy_map = 0;
     if(!(joy0_state & JOY0_UP))    joy_map |= JOY_UP;
@@ -839,8 +852,13 @@ void user_io_poll() {
   }
   
   static int joy1_state = JOY1;
+#if !defined MIST_STM32
   if((*AT91C_PIOA_PDSR & JOY1) != joy1_state) {
     joy1_state = *AT91C_PIOA_PDSR & JOY1;
+#else
+  if (0) {
+    joy1_state = 0;
+#endif
     
     unsigned char joy_map = 0;
     if(!(joy1_state & JOY1_UP))    joy_map |= JOY_UP;

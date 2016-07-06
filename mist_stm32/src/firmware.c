@@ -188,6 +188,7 @@ RAMFUNC void WriteFirmware(fileTYPE *file, char *name)
     page = 0;
     pDst = 0;
 
+#if !defined MIST_STM32
     *AT91C_MC_FMR = 48 << 16 | FWS << 8; // MCLK cycles in 1us
     for (i = 0; i < 16; i++)
         if (*AT91C_MC_FSR & 1 << 16 + i)
@@ -198,6 +199,7 @@ RAMFUNC void WriteFirmware(fileTYPE *file, char *name)
         }
 
     *AT91C_MC_FMR = 72 << 16 | FWS << 8; // MCLK cycles in 1.5us
+#endif
 
     while (size)
     {
@@ -262,16 +264,20 @@ RAMFUNC void WriteFirmware(fileTYPE *file, char *name)
 
 		DISKLED_OFF;
 
+#if !defined MIST_STM32
                 while (!(*AT91C_MC_FSR & AT91C_MC_FRDY));  // wait for ready
                 *AT91C_MC_FCR = 0x5A << 24 | page << 8 | AT91C_MC_FCMD_START_PROG; // key: 0x5A
                 while (!(*AT91C_MC_FSR & AT91C_MC_FRDY));  // wait for ready
+#endif
                 page++;
         }
 
         size -= read_size;
     }
 
+#if !defined MIST_STM32
     *AT91C_RSTC_RCR = 0xA5 << 24 | AT91C_RSTC_PERRST | AT91C_RSTC_PROCRST; // restart
+#endif
     for(;;);
 }
 #pragma section_no_code_init

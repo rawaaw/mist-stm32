@@ -4,12 +4,12 @@
 ARM Macro Assembler    Page 1 
 
 
-    1 00000000         ;******************** (C) COPYRIGHT 2015 STMicroelectron
+    1 00000000         ;******************** (C) COPYRIGHT 2016 STMicroelectron
                        ics ********************
     2 00000000         ;* File Name          : startup_stm32f407xx.s
     3 00000000         ;* Author             : MCD Application Team
-    4 00000000         ;* Version            : V2.4.2
-    5 00000000         ;* Date               : 13-November-2015
+    4 00000000         ;* Version            : V2.5.0
+    5 00000000         ;* Date               : 22-April-2016
     6 00000000         ;* Description        : STM32F407xx devices vector table
                         for MDK-ARM toolchain. 
     7 00000000         ;*                      This module performs:
@@ -882,15 +882,15 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\startup_stm32f407xx.d -o.\objects\startup_stm32f407xx
-.o -IC:\user\andrew\cypress\mist-stm32\mist_stm32\RTE -IC:\user\andrew\cypress\
-mist-stm32\mist_stm32\RTE\Device\STM32F407VETx -IC:\APPS\Keil_v5\ARM\PACK\ARM\C
-MSIS\5.0.0-Beta4\CMSIS\Driver\Include -IC:\APPS\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.
-0-Beta4\CMSIS\Include -IC:\APPS\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.1.0\Boar
-d -IC:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\S
-TM32F4xx\Include -IC:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\ST
-M32F4xx_HAL_Driver\Inc --predefine="__UVISION_VERSION SETA 520" --predefine="_R
-TE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=.\listings\startup_stm32f40
-7xx.lst RTE\Device\STM32F407VETx\startup_stm32f407xx.s
+.o -IC:\user\andrew\cypress\mist-stm32\mist_stm32\RTE -IC:\APPS\Keil_v5\ARM\PAC
+K\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include -IC:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx
+_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -IC:\APPS\Keil_v5\ARM\PACK
+\Keil\STM32F4xx_DFP\2.9.0\Drivers\STM32F4xx_HAL_Driver\Inc -IC:\user\andrew\cyp
+ress\mist-stm32\mist_stm32\RTE\Device\STM32F407VETx -IC:\user\andrew\cypress\mi
+st-stm32\mist_stm32\RTE\Device\STM32F407VETx\STCubeGenerated\Inc -ISTCubeGenera
+ted\Inc --predefine="__UVISION_VERSION SETA 520" --predefine="_RTE_ SETA 1" --p
+redefine="STM32F407xx SETA 1" --list=.\listings\startup_stm32f407xx.lst RTE\Dev
+ice\STM32F407VETx\startup_stm32f407xx.s
 
 
 

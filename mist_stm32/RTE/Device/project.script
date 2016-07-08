@@ -1,0 +1,4 @@
+load STM32F407VETx 
+project name STCubeGenerated 
+project toolchain "MDK-ARM V5" 
+project path C:\user\andrew\cypress\mist-stm32\mist_stm32\RTE\Device\STM32F407VETx\ 

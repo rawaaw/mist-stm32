@@ -100,7 +100,7 @@ void HandleFpga(void) {
 }
 
 extern void inserttestfloppy();
-
+#if !defined MIST_STM32
 int main(void)
 {
     uint8_t tmp;
@@ -214,3 +214,4 @@ int main(void)
     }
     return 0;
 }
+#endif

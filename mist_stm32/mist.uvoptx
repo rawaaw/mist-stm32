@@ -82,47 +82,47 @@
         <Book>
           <Number>0</Number>
           <Title>STM32F4-Discovery Quick Start Guide (STM32F4-Discovery)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Documentation\32F4-DISCOVERY_QSG.pdf</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Documentation\32F4-DISCOVERY_QSG.pdf</Path>
         </Book>
         <Book>
           <Number>1</Number>
           <Title>MCBSTM32F400 Quick Start Guide (MCBSTM32F400)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Documentation\MCBSTM32F400_QSG.pdf</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Documentation\MCBSTM32F400_QSG.pdf</Path>
         </Book>
         <Book>
           <Number>2</Number>
           <Title>User Manual (MCBSTM32F400)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f200.chm</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f200.chm</Path>
         </Book>
         <Book>
           <Number>3</Number>
           <Title>Schematics (MCBSTM32F400)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f400-schematics.pdf</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f400-schematics.pdf</Path>
         </Book>
         <Book>
           <Number>4</Number>
           <Title>Getting Started (STM32F4-Discovery)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\DM00037368.pdf</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\DM00037368.pdf</Path>
         </Book>
         <Book>
           <Number>5</Number>
           <Title>User Manual (STM32F4-Discovery)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\DM00039084.pdf</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\DM00039084.pdf</Path>
         </Book>
         <Book>
           <Number>6</Number>
           <Title>Bill of Materials (STM32F4-Discovery)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_bom.zip</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_bom.zip</Path>
         </Book>
         <Book>
           <Number>7</Number>
           <Title>Gerber Files (STM32F4-Discovery)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_gerber.zip</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_gerber.zip</Path>
         </Book>
         <Book>
           <Number>8</Number>
           <Title>Schematics (STM32F4-Discovery)</Title>
-          <Path>C:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_sch.zip</Path>
+          <Path>d:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_sch.zip</Path>
         </Book>
         <Book>
           <Number>9</Number>
@@ -136,8 +136,8 @@
         </Book>
       </Books>
       <DebugOpt>
-        <uSim>0</uSim>
-        <uTrg>1</uTrg>
+        <uSim>1</uSim>
+        <uTrg>0</uTrg>
         <sLdApp>1</sLdApp>
         <sGomain>1</sGomain>
         <sRbreak>1</sRbreak>
@@ -162,7 +162,7 @@
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
         <sDlgPa></sDlgPa>
-        <sIfile></sIfile>
+        <sIfile>.\sim_debug.ini</sIfile>
         <tDll></tDll>
         <tDllPa></tDllPa>
         <tDlgDll></tDlgDll>
@@ -173,23 +173,119 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>ARMRTXEVENTFLAGS</Key>
+          <Name>-L70 -Z18 -C0 -M0 -T1</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>DLGDARM</Key>
+          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+          <Key>ARMDBGFLAGS</Key>
+          <Name>-T0</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>UL2CM3</Key>
           <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_512 -FS08000000 -FL080000 -FP0($$Device:STM32F407VETx$CMSIS\Flash\STM32F4xx_512.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>300</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134231694</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\mist_stm32\RTE/Device/STM32F407VETx/STCubeGenerated/Src/main.c\300</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>100</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134314146</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\mist_stm32\RTE/Device/STM32F407VETx/STCubeGenerated/Src/main.c\100</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>122</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134314158</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\mist_stm32\src/main.c\122</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>124</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134289452</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\mist_stm32\RTE/Device/STM32F407VETx/STCubeGenerated/Src/main.c\124</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>153</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+      </Breakpoint>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>0</aLwin>
+        <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
         <aPa>0</aPa>
-        <viewmode>0</viewmode>
+        <viewmode>1</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -202,7 +298,7 @@
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
         <aSer4>0</aSer4>
-        <StkLoc>0</StkLoc>
+        <StkLoc>1</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
         <uProt>0</uProt>
@@ -224,7 +320,7 @@
 
   <Group>
     <GroupName>src</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1236,7 +1332,7 @@
 
   <Group>
     <GroupName>:STM32CubeMX:Common Sources</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1244,7 +1340,7 @@
       <GroupNumber>3</GroupNumber>
       <FileNumber>84</FileNumber>
       <FileType>1</FileType>
-      <tvExp>0</tvExp>
+      <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</PathWithFileName>

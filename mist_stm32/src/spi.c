@@ -133,6 +133,9 @@ RAMFUNC void spi_read(char *addr, uint16_t len) {
   *AT91C_SPI_PTCR = AT91C_PDC_RXTDIS | AT91C_PDC_TXTDIS; // disable transmitter and receiver
 
   *AT91C_PIOA_PDR = AT91C_PA13_MOSI; // disable GPIO function
+#else
+  HAL_StatusTypeDef rc = HAL_SPI_Receive(&hspi2, (uint8_t*)addr, len, 1000);
+  return;
 #endif
 }
 
@@ -151,6 +154,8 @@ void spi_write(char *addr, uint16_t len) {
   // wait for tranfer end
   while (!(*AT91C_SPI_SR & AT91C_SPI_ENDTX));
   *AT91C_SPI_PTCR = AT91C_PDC_TXTDIS; // disable transmitter
+#else
+  HAL_StatusTypeDef rc = HAL_SPI_Transmit(&hspi2, (uint8_t*)addr, len, 1000);
 #endif
 }
 

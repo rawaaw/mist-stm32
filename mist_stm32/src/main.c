@@ -103,6 +103,9 @@ extern void inserttestfloppy();
 #if !defined MIST_STM32
 int main(void)
 {
+#else
+int main_stm32(void){
+#endif /* MIST_STM32 */
     uint8_t tmp;
     uint8_t mmc_ok = 0;
 
@@ -214,4 +217,3 @@ int main(void)
     }
     return 0;
 }
-#endif

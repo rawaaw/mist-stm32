@@ -8,6 +8,10 @@
 
 #include "hardware.h"
 
+#if defined MIST_STM32
+extern SPI_HandleTypeDef hspi2;
+#endif 
+
 /* main init functions */
 void spi_init(void);
 void spi_slow();
@@ -74,7 +78,9 @@ static inline unsigned char SPI(unsigned char outByte) {
   while (!(*AT91C_SPI_SR & AT91C_SPI_RDRF));
   return((unsigned char)*AT91C_SPI_RDR);
 #else
-  return 0;
+  uint8_t data;
+  HAL_StatusTypeDef rc = HAL_SPI_TransmitReceive(&hspi2, &outByte,  &data, sizeof(data), 1000);
+  return data;
 #endif
 }
 
@@ -84,7 +90,9 @@ static inline unsigned char SPI_READ() {
   while (!(*AT91C_SPI_SR & AT91C_SPI_RDRF));
   return((unsigned char)*AT91C_SPI_RDR);
 #else
-  return 0;
+  uint8_t data;
+  HAL_StatusTypeDef rc = HAL_SPI_Receive(&hspi2, &data, sizeof(data), 1000);
+  return data;
 #endif
 }
 
@@ -92,6 +100,8 @@ static inline void SPI_WRITE(unsigned char outByte) {
 #if !defined MIST_STM32
   while (!(*AT91C_SPI_SR & AT91C_SPI_TDRE));
   *AT91C_SPI_TDR = outByte;
+#else
+  HAL_StatusTypeDef rc = HAL_SPI_Transmit(&hspi2, &outByte, sizeof(outByte), 1000);
 #endif
 }
 

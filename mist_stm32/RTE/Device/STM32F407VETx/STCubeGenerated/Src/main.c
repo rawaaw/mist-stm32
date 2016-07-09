@@ -63,6 +63,7 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+extern int main_stm32(void);
 
 /* USER CODE END PFP */
 
@@ -96,8 +97,10 @@ int main(void)
 
   /* USER CODE END 2 */
 
+  main_stm32();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+#if 0
   while (1)
   {
   /* USER CODE END WHILE */
@@ -105,6 +108,7 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
   }
+#endif
   /* USER CODE END 3 */
 
 }
@@ -288,9 +292,13 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler */
   /* User can add his own implementation to report the HAL error return state */
+#if !defined MIST_STM32_DBG
   while(1) 
   {
   }
+#else
+   printf("Error_Handler!!!!!");
+#endif
   /* USER CODE END Error_Handler */ 
 }
 

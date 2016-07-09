@@ -69,8 +69,8 @@
 #else  /* MIST_STM32 */
 
 #define DISKLED
-#define DISKLED_ON
-#define DISKLED_OFF
+#define DISKLED_ON    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET)
+#define DISKLED_OFF   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET)
 
 #define JOY1_UP        0
 #define JOY1_DOWN      0

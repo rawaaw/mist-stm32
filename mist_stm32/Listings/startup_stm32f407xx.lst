@@ -882,13 +882,13 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\objects\startup_stm32f407xx.d -o.\objects\startup_stm32f407xx
-.o -IC:\user\andrew\cypress\mist-stm32\mist_stm32\RTE -IC:\APPS\Keil_v5\ARM\PAC
-K\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include -IC:\APPS\Keil_v5\ARM\PACK\Keil\STM32F4xx
-_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -IC:\APPS\Keil_v5\ARM\PACK
-\Keil\STM32F4xx_DFP\2.9.0\Drivers\STM32F4xx_HAL_Driver\Inc -IC:\user\andrew\cyp
-ress\mist-stm32\mist_stm32\RTE\Device\STM32F407VETx -IC:\user\andrew\cypress\mi
-st-stm32\mist_stm32\RTE\Device\STM32F407VETx\STCubeGenerated\Inc -ISTCubeGenera
-ted\Inc --predefine="__UVISION_VERSION SETA 520" --predefine="_RTE_ SETA 1" --p
+.o -ID:\users\andrew\fpga\projects\git\mist_stm32\RTE -ID:\users\andrew\fpga\pr
+ojects\git\mist_stm32\RTE\Device\STM32F407VETx -ID:\users\andrew\fpga\projects\
+git\mist_stm32\RTE\Device\STM32F407VETx\STCubeGenerated\Inc -ISTCubeGenerated\I
+nc -Id:\apps\Keil_v5\ARM\PACK\ARM\CMSIS\5.0.0-Beta4\CMSIS\Include -Id:\apps\Kei
+l_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\CMSIS\Device\ST\STM32F4xx\Includ
+e -Id:\apps\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.9.0\Drivers\STM32F4xx_HAL_Dri
+ver\Inc --predefine="__UVISION_VERSION SETA 520" --predefine="_RTE_ SETA 1" --p
 redefine="STM32F407xx SETA 1" --list=.\listings\startup_stm32f407xx.lst RTE\Dev
 ice\STM32F407VETx\startup_stm32f407xx.s
 

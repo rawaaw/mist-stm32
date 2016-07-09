@@ -2235,5 +2235,5 @@ typedef struct _AT91S_UDP {
 #endif
 
 #else /* MIST_STM32*/
-# include "RTE_Components.h"
+# include "stm32f4xx_hal.h"
 #endif

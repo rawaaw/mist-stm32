@@ -41,6 +41,40 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define BTN1_Pin GPIO_PIN_3
+#define BTN1_GPIO_Port GPIOE
+#define BTN2_Pin GPIO_PIN_4
+#define BTN2_GPIO_Port GPIOE
+#define PS2_KBD_SCK_Pin GPIO_PIN_0
+#define PS2_KBD_SCK_GPIO_Port GPIOA
+#define PS2_KBD_DATA_Pin GPIO_PIN_1
+#define PS2_KBD_DATA_GPIO_Port GPIOA
+#define PS2_MOUSE_SCK_Pin GPIO_PIN_2
+#define PS2_MOUSE_SCK_GPIO_Port GPIOA
+#define PS2_MOUSE_DATA_Pin GPIO_PIN_3
+#define PS2_MOUSE_DATA_GPIO_Port GPIOA
+#define DISKLED_Pin GPIO_PIN_6
+#define DISKLED_GPIO_Port GPIOA
+#define LED_Pin GPIO_PIN_7
+#define LED_GPIO_Port GPIOA
+#define SS0_Pin GPIO_PIN_4
+#define SS0_GPIO_Port GPIOC
+#define SS2_FPGA_Pin GPIO_PIN_5
+#define SS2_FPGA_GPIO_Port GPIOC
+#define SS3_OSD_Pin GPIO_PIN_0
+#define SS3_OSD_GPIO_Port GPIOB
+#define SS4_SD_DIRECT_Pin GPIO_PIN_1
+#define SS4_SD_DIRECT_GPIO_Port GPIOB
+#define CONF_DATA0_Pin GPIO_PIN_2
+#define CONF_DATA0_GPIO_Port GPIOB
+#define CONF_NCONFIG_Pin GPIO_PIN_7
+#define CONF_NCONFIG_GPIO_Port GPIOE
+#define CONF_NSTATUS_Pin GPIO_PIN_8
+#define CONF_NSTATUS_GPIO_Port GPIOE
+#define CONF_DONE_Pin GPIO_PIN_9
+#define CONF_DONE_GPIO_Port GPIOE
+#define CONF_DCLK_Pin GPIO_PIN_10
+#define CONF_DCLK_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

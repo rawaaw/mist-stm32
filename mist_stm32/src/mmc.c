@@ -51,6 +51,10 @@ static void MMC_CRC(unsigned char c) RAMFUNC;
 static unsigned char MMC_Command(unsigned char cmd, unsigned long arg) RAMFUNC;
 static unsigned char MMC_CMD12(void);
 
+#if defined MIST_STM32
+extern SD_HandleTypeDef hsd;
+#endif
+
 unsigned char MMC_CheckCard() {
   // check for removal of card
   if((CardType != CARDTYPE_NONE) && !mmc_inserted()) {
@@ -77,6 +81,7 @@ static RAMFUNC char check_card() {
 // init memory card
 unsigned char MMC_Init(void)
 {
+#if !defined MIST_STM32
     unsigned char n;
     unsigned char ocr[4];
 
@@ -209,12 +214,26 @@ unsigned char MMC_Init(void)
     DisableCard();
     iprintf("No memory card detected!\r");
     return(CARDTYPE_NONE); 
+#else
+    CardType = CARDTYPE_SDHC;
+    return(CardType);
+#endif
 }
 
 
 // Read single 512-byte block
 RAMFUNC unsigned char MMC_Read(unsigned long lba, unsigned char *pReadBuffer)
 {
+#if defined MIST_STM32
+    HAL_SD_ErrorTypedef rc;
+    if (pReadBuffer){
+      rc = HAL_SD_ReadBlocks  (&hsd, (uint32_t*)pReadBuffer, lba, 512, 1);
+    } else {
+      /* !!! spi emulatlor will be used !!!*/
+      rc = SD_UNSUPPORTED_FEATURE;
+    }
+    return(rc == SD_OK);
+#else
     // if pReadBuffer is NULL then use direct to the FPGA transfer mode (FPGA2 asserted)
 
     // check of card has been removed and try to re-initialize it
@@ -263,6 +282,7 @@ RAMFUNC unsigned char MMC_Read(unsigned long lba, unsigned char *pReadBuffer)
 
     DisableCard();
     return(1);
+#endif
 }
 
 static unsigned char MMC_GetCXD(unsigned char cmd, unsigned char *ptr) {

@@ -117,11 +117,21 @@ int main_stm32(void){
     setvbuf(stderr, NULL, _IONBF, 0);
 #endif   
 
-    DISKLED_ON;
+//    DISKLED_ON;
+    DISKLED_OFF;
 
+#if !defined MIST_STM32
     Timer_Init();
 
     USART_Init(115200);
+#else
+#if 0
+    extern UART_HandleTypeDef huart1;
+    while (1){
+      HAL_UART_Transmit(&huart1, "Test ", 5, 1000);  
+    }
+#endif
+#endif
 
     iprintf("\rMinimig by Dennis van Weeren");
     iprintf("\rARM Controller by Jakub Bednarski\r\r");
@@ -129,8 +139,10 @@ int main_stm32(void){
 
     spi_init();
 
-    if(MMC_Init()) mmc_ok = 1;
-    else           spi_fast();
+    if(MMC_Init())
+      mmc_ok = 1;
+    else
+      spi_fast();
 
     // TODO: If MMC fails try to wait for USB storage
 
@@ -141,16 +153,18 @@ int main_stm32(void){
 #endif
     iprintf("spiclk: %u MHz\r", tmp);
 
+#if !defined MIST_STM32
     usb_init();
+#endif
 
     // mmc init failed, try to wait for usb
     if(!mmc_ok) {
       uint32_t to = GetTimer(2000);
 
-#ifdef USB_STORAGE
+#if defined USB_STORAGE && !defined MIST_STM32
       // poll usb 2 seconds or until a mass storage device becomes ready
       while(!storage_devices && !CheckTimer(to)) 
-	usb_poll();
+      usb_poll();
 
       // no usb storage device after 2 seconds ...
       if(!storage_devices)

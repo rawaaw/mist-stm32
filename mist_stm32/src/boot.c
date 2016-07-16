@@ -13,13 +13,14 @@
 #include "rafile.h"
 
 // TODO!
-#if 0
+#if !defined MIST_STM32
 #define SPIN() asm volatile ( "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0");
 #else
-#warning asm SPIN!!!!!
+#warning asm!!!!!
+//#define SPIN() __asm{mov r0,1;mov r0,1;mov r0,1;mov r0,1;mov r0,1};
 #define SPIN()
 #endif
 
@@ -31,7 +32,7 @@ static void mem_upload_fini() {
   DisableOsd();
 
   // do we really still need these if it's within a function?
-  SPIN(); SPIN(); 
+  SPIN(); SPIN();
   SPIN(); SPIN();
 }
 

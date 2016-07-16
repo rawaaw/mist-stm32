@@ -352,7 +352,7 @@ char mmc_inserted() {
 #if !defined MIST_STM32
   return !(*AT91C_PIOA_PDSR & SD_CD);
 #else
-  return 0;
+  return 1; /* already instered for a while */
 #endif
 }
 

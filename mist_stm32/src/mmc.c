@@ -226,8 +226,13 @@ RAMFUNC unsigned char MMC_Read(unsigned long lba, unsigned char *pReadBuffer)
 {
 #if defined MIST_STM32
     HAL_SD_ErrorTypedef rc;
+    HAL_SD_ErrorTypedef  st;
+    HAL_SD_CardStatusTypedef CardStatus;
+ 
+    st = HAL_SD_GetCardStatus  (&hsd, &CardStatus);
+ 
     if (pReadBuffer){
-      rc = HAL_SD_ReadBlocks  (&hsd, (uint32_t*)pReadBuffer, lba, 512, 1);
+      rc = HAL_SD_ReadBlocks  (&hsd, (uint32_t*)pReadBuffer, (lba << 9), 512, 1);
     } else {
       /* !!! spi emulatlor will be used !!!*/
       rc = SD_UNSUPPORTED_FEATURE;

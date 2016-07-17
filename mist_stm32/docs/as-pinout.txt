@@ -1,0 +1,8 @@
+Signal            STM32     AS - Altera  Color
+GND                GND           2       black
+ALTERA_DONE        PE9           3       yellow
+ALTERA_DCLK        PE10          1       orange
+ALTERA_NCONFIG     PE7           5       red
+ALTERA_DATA0       PE8           7       brown
+nCS                PE11          8       blue
+nCE                PE12          6       green

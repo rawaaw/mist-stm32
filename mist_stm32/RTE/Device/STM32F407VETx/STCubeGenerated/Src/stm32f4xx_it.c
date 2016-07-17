@@ -68,6 +68,10 @@ void HardFault_Handler(void)
   /* USER CODE END HardFault_IRQn 0 */
   while (1)
   {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+    HAL_Delay(100);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+    HAL_Delay(300);
   }
   /* USER CODE BEGIN HardFault_IRQn 1 */
 

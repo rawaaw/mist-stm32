@@ -175,8 +175,6 @@ static void MX_SDIO_SD_Init(void)
     Error_Handler();
   }
 
-  HAL_SD_WideBusOperation_Config(&hsd, SDIO_BUS_WIDE_4B);
-
 }
 
 /* SPI2 init function */
@@ -263,8 +261,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-  /*Configure GPIO pins : BTN1_Pin BTN2_Pin */
-  GPIO_InitStruct.Pin = BTN1_Pin|BTN2_Pin;
+  /*Configure GPIO pins : BTN1_Pin BTN2_Pin CONF_DONE_Pin */
+  GPIO_InitStruct.Pin = BTN1_Pin|BTN2_Pin|CONF_DONE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
@@ -289,15 +287,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SS3_OSD_Pin SS4_SD_DIRECT_Pin CONF_DATA0_Pin */
-  GPIO_InitStruct.Pin = SS3_OSD_Pin|SS4_SD_DIRECT_Pin|CONF_DATA0_Pin;
+  /*Configure GPIO pins : SS3_OSD_Pin SS4_SD_DIRECT_Pin none_Pin */
+  GPIO_InitStruct.Pin = SS3_OSD_Pin|SS4_SD_DIRECT_Pin|none_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : CONF_NCONFIG_Pin CONF_NSTATUS_Pin CONF_DONE_Pin CONF_DCLK_Pin */
-  GPIO_InitStruct.Pin = CONF_NCONFIG_Pin|CONF_NSTATUS_Pin|CONF_DONE_Pin|CONF_DCLK_Pin;
+  /*Configure GPIO pins : CONF_NCONFIG_Pin CONF_DATA0_Pin CONF_DCLK_Pin nCS_Pin 
+                           nCE_Pin */
+  GPIO_InitStruct.Pin = CONF_NCONFIG_Pin|CONF_DATA0_Pin|CONF_DCLK_Pin|nCS_Pin 
+                          |nCE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -310,10 +310,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, SS0_Pin|SS2_FPGA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, SS3_OSD_Pin|SS4_SD_DIRECT_Pin|CONF_DATA0_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, SS3_OSD_Pin|SS4_SD_DIRECT_Pin|none_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, CONF_NCONFIG_Pin|CONF_NSTATUS_Pin|CONF_DONE_Pin|CONF_DCLK_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, CONF_NCONFIG_Pin|CONF_DATA0_Pin|CONF_DCLK_Pin|nCS_Pin 
+                          |nCE_Pin, GPIO_PIN_RESET);
 
 }
 

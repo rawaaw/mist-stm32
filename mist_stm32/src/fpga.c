@@ -232,16 +232,22 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
 #endif
 
 
-#ifdef ALTERA_DCLK
+#if defined ALTERA_DCLK || defined MIST_STM32
 static inline void ShiftFpga(unsigned char data)
 {
     unsigned char i;
     for ( i = 0; i < 8; i++ )
     {
+#if !defined MIST_STM32
         /* Dump to DATA0 and insert a positive edge pulse at the same time */
         *AT91C_PIOA_CODR = ALTERA_DATA0 | ALTERA_DCLK;
         if((data >> i) & 1) *AT91C_PIOA_SODR = ALTERA_DATA0;
         *AT91C_PIOA_SODR = ALTERA_DCLK;
+#else
+        HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port /*GPIOE*/, CONF_DATA0_Pin /*Pin8*/, ((data >> i) & 1));
+        HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_SET);
+#endif
     }
 }
 
@@ -251,10 +257,20 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     unsigned long i;
     unsigned char *ptr;
 
+#if !defined MIST_STM32
     // set outputs
     *AT91C_PIOA_SODR = ALTERA_DCLK | ALTERA_DATA0 | ALTERA_NCONFIG;
     // enable outputs
     *AT91C_PIOA_OER = ALTERA_DCLK | ALTERA_DATA0 | ALTERA_NCONFIG;
+#else
+    GPIO_PinState conf_done = GPIO_PIN_SET;
+
+    HAL_GPIO_WritePin(CONF_NCONFIG_GPIO_Port, CONF_NCONFIG_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port, CONF_DATA0_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(nCE_GPIO_Port, nCE_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(nCS_GPIO_Port, nCS_Pin, GPIO_PIN_SET);
+#endif
 
     if(!name)
       name = "CORE    RBF";
@@ -272,6 +288,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     // send all bytes to FPGA in loop
     ptr = sector_buffer;
 
+#if !defined MIST_STM32
     /* Drive a transition of 0 to 1 to NCONFIG to indicate start of configuration */
     for(i=0;i<10;i++)
       *AT91C_PIOA_CODR = ALTERA_NCONFIG;  // must be low for at least 500ns
@@ -289,6 +306,31 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
             FatalError(3);
         }
     }
+#else
+    for(i=0;i<10;i++) // must be low for at least 500ns
+      HAL_GPIO_WritePin(CONF_NCONFIG_GPIO_Port, CONF_NCONFIG_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(CONF_NCONFIG_GPIO_Port, CONF_NCONFIG_Pin, GPIO_PIN_SET);
+
+    // now wait for NSTATUS to go high.
+    // specs: max 800us
+    i = 1000000;
+    while (i && conf_done == GPIO_PIN_SET){
+      conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
+      if (--i == 0)
+      {
+        iprintf("FPGA NSTATUS is NOT high!\r");
+        FatalError(3);
+      }
+    }
+    /* board has no NSTATUS output pin. Just wait without check */
+    for(i=0; i<100; i++)
+      conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
+    if (conf_done)
+    {
+      iprintf("FPGA NSTATUS is NOT high!\r");
+      FatalError(3);
+    }
+#endif
 
     DISKLED_ON;
 
@@ -302,9 +344,9 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
         if ((i & 0x1FF) == 0)
         {
             if (i & (1<<13))
-                DISKLED_OFF
+                DISKLED_OFF;
             else
-                DISKLED_ON
+                DISKLED_ON;
 
             if ((i & 0x3FFF) == 0)
                 iprintf("*");
@@ -322,6 +364,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
           bytes2copy--;
         }
 
+#if !defined MIST_STM32
         /* Check for error through NSTATUS for every 10KB programmed and the last byte */
         if ( !(i % 10240) || (i == file.size - 1) ) {
             if ( !*AT91C_PIOA_PDSR & ALTERA_NSTATUS ) {
@@ -329,7 +372,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
                 FatalError(5);
             }
         }
-
+#endif
         // read next sector if 512 (64*8) bytes done
         if ((i & 0x1FF) == 0)
             FileNextSector(&file);
@@ -340,10 +383,18 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     DISKLED_OFF;
 
     // check if DONE is high
+#if !defined MIST_STM32
     if (!(*AT91C_PIOA_PDSR & ALTERA_DONE)) {
       iprintf("FPGA Configuration done but contains error... CONF_DONE is LOW\r");
       FatalError(5);
     }
+#else
+    conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
+//    if (conf_done == GPIO_PIN_RESET) {
+//      iprintf("FPGA Configuration done but contains error... CONF_DONE is LOW\r");
+//      FatalError(5);
+//    }
+#endif /*ALTERA_DCLK || defined MIST_STM32*/
 
     
     /* Start initialization */
@@ -355,7 +406,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
        while waiting for the initialization of the device to complete before
        checking the CONFDONE and NSTATUS signals at the end of whole 
        configuration cycle */
-    
+#if !defined MIST_STM32    
     for ( i = 0; i < 50; i++ )
     {
         *AT91C_PIOA_CODR = ALTERA_DCLK;
@@ -371,13 +422,34 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
              ((*AT91C_PIOA_PDSR & ALTERA_NSTATUS)?"HIGH":"LOW"), ((*AT91C_PIOA_PDSR & ALTERA_DONE)?"HIGH":"LOW") );
       FatalError(5);
     }
+#else
+    for ( i = 0; i < 50; i++ )
+    {
+      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_RESET);
+      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_SET);
+    }
+
+    /* Initialization end */
+    conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
+    if (conf_done == GPIO_PIN_RESET) {
+      
+      iprintf("FPGA Initialization finish but contains error: CONF_DONE is %s.\r", conf_done);
+      FatalError(5);
+    }
+#endif
 
     return 1;
 }
 #endif
 
-#if defined MIST_STM32
+#if 0 //defined MIST_STM32
 RAMFUNC unsigned char ConfigureFpga(char *name){
+  while (1){
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+    HAL_Delay(100);
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+    HAL_Delay(300);
+  }
   return 0;
 }
 #endif
@@ -857,12 +929,18 @@ unsigned char GetFPGAStatus(void)
 
 void fpga_init(char *name) {
   unsigned long time = GetTimer(0);
+#if !defined MIST_STM32
   int loaded_from_usb = USB_LOAD_VAR;
 
   iprintf("loaded_from_usb = %d\n", USB_LOAD_VAR == USB_LOAD_VALUE);
   USB_LOAD_VAR = 0;
 
   if((loaded_from_usb != USB_LOAD_VALUE) && !user_io_dip_switch1()) {
+#else
+#warning USB_LOAD_VAR is hardcoded memory address !!!!! 
+  if(1) {
+#endif
+
     unsigned char ct;
 
     if (ConfigureFpga(name)) {

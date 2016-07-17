@@ -148,8 +148,13 @@ void user_io_init() {
 
   InitADC();
   
+#if !defined MIST_STM32
   if(user_io_menu_button()) DEBUG_MODE_VAR = DEBUG_MODE ? 0 : DEBUG_MODE_VALUE;
   iprintf("debug_mode = %d\n", DEBUG_MODE);
+#else
+#warning var access by hardcoded address !!!!
+  iprintf("debug_mode (DEBUG_MODE_VAR ???) = %d\n", 0);
+#endif
 
   ikbd_init();
 }

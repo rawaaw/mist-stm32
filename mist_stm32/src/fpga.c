@@ -251,7 +251,17 @@ static inline void ShiftFpga(unsigned char data)
     }
 }
 
-// Altera FPGA configuration
+/* Altera FPGA configuration (JTAG mode) */
+/* https://www.altera.com/support/support-resources/support-centers/devices/cfg-index/cfg-jtag.html */
+RAMFUNC unsigned char ConfigureFpga(char *name){
+  
+  iprintf("Waiting for implementation with wpjrunner.");
+  FatalError(5);
+  return 1;
+}
+
+// Altera FPGA configuration (PS mode. My board has hard wired MSEL0-2 for AS. Can not use this mode)
+#if defined FPGA_PS_MODE
 RAMFUNC unsigned char ConfigureFpga(char *name)
 {
     unsigned long i;
@@ -441,6 +451,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     return 1;
 }
 #endif
+#endif /* FPGA_PS_MODE */
 
 #if 0 //defined MIST_STM32
 RAMFUNC unsigned char ConfigureFpga(char *name){

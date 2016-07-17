@@ -23,7 +23,8 @@
 #endif
 
 /*put #define PORT EMBEDDED if embedded configurations is used*/
-#define PORT WINDOWS_NT
+/*#define PORT WINDOWS_NT*/
+#define PORT EMBEDDED
 
 /* Macro for buffer_enable argument in WritePort function */
 #define BUFFER_ON 1

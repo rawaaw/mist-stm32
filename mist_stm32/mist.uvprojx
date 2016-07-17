@@ -334,7 +334,7 @@
               <MiscControls></MiscControls>
               <Define>USB_STORAGE  MIST_STM32</Define>
               <Undefine></Undefine>
-              <IncludePath>.\inc;.\inc\usb</IncludePath>
+              <IncludePath>.\inc;.\inc\usb;.\inc\wpjrunner</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,6 +374,51 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>wpjrunner_src</GroupName>
+          <Files>
+            <File>
+              <FileName>jb_io.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\wpjrunner\jb_io.c</FilePath>
+            </File>
+            <File>
+              <FileName>jb_jtag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\wpjrunner\jb_jtag.c</FilePath>
+            </File>
+            <File>
+              <FileName>jrunner.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\wpjrunner\jrunner.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wpjrunner_inc</GroupName>
+          <Files>
+            <File>
+              <FileName>jb_const.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\inc\wpjrunner\jb_const.h</FilePath>
+            </File>
+            <File>
+              <FileName>jb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\inc\wpjrunner\jb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>jb_io.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\inc\wpjrunner\jb_io.h</FilePath>
+            </File>
+            <File>
+              <FileName>jb_jtag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\inc\wpjrunner\jb_jtag.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>src</GroupName>
           <Files>

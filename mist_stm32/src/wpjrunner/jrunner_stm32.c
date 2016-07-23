@@ -21,7 +21,7 @@ void DriveSignal      (int signal,int data,int clk,int buffer_enable);
 void Configure        (int file_id,int dev_seq,int idcode);
 void ProcessFileInput (int finputid, int idcode);
 int  CheckStatus      (int dev_seq);
-int	 SAMPLE_BSC		  (int dev_seq, int jtag_seq_num, int bsc_type);
+int  SAMPLE_BSC       (int dev_seq, int jtag_seq_num, int bsc_type);
 void Startup          (int dev_seq);
 
 /* JTAG instruction lengths of all devices */

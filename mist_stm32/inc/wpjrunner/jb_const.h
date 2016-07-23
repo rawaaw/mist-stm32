@@ -22,7 +22,8 @@
 
 /* User Variables */
 
-#define MAX_DEVICE_ALLOW 10
+/* define MAX_DEVICE_ALLOW 10 */
+#define MAX_DEVICE_ALLOW 1
 #define MAX_CONFIG_COUNT 3
 #define INIT_COUNT       200
 

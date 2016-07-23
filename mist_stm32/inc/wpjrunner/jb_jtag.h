@@ -75,7 +75,7 @@ extern const int JI_CLAMP;		  //= 0x00A;
 
 int  AdvanceJSM(int);
 int  ReadTDO(int bits,int data,int inst);
-void PrintJS();
+void PrintJS(void);
 void SetupChain(int dev_count,int dev_seq,int* ji_info,int action);
 
 int  LoadJI(int inst,int dev_count,int* ji_info);
@@ -92,9 +92,9 @@ int  Ji_Config_IO(int device,int* ji_info);
 int  Ji_HighZ(int device,int* ji_info);
 int  Ji_Clamp(int device,int* ji_info);
 
-void Js_Reset();
-void Js_Runidle();
-int  Js_Shiftdr();
-int  Js_Updatedr();
+void Js_Reset(void);
+void Js_Runidle(void);
+int  Js_Shiftdr(void);
+int  Js_Updatedr(void);
 
 #endif

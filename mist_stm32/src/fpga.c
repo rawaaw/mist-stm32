@@ -53,6 +53,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #warning asm !!!
 #endif
 
+#if defined MIST_STM32
+/* jrunner */
+/* variables */
+extern int device_count; /* Number of JTAG-comnpatible device in chain */
+extern int device_family; /* Device Family, check jb_device.h for detail */
+
+/* functinos */
+extern int  VerifyChain(void);
+
+#endif
+
 extern fileTYPE file;
 extern char s[40];
 extern adfTYPE df[4];
@@ -273,13 +284,8 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     // enable outputs
     *AT91C_PIOA_OER = ALTERA_DCLK | ALTERA_DATA0 | ALTERA_NCONFIG;
 #else
-    GPIO_PinState conf_done = GPIO_PIN_SET;
-
-    HAL_GPIO_WritePin(CONF_NCONFIG_GPIO_Port, CONF_NCONFIG_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port, CONF_DATA0_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(nCE_GPIO_Port, nCE_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(nCS_GPIO_Port, nCS_Pin, GPIO_PIN_SET);
+    device_count = 1;
+    VerifyChain();
 #endif
 
     if(!name)

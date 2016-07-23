@@ -354,8 +354,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\src\wpjrunner\jb_io.c</PathWithFileName>
-      <FilenameWithoutPath>jb_io.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\wpjrunner\jb_io_stm32.c</PathWithFileName>
+      <FilenameWithoutPath>jb_io_stm32.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -366,8 +366,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\src\wpjrunner\jb_jtag.c</PathWithFileName>
-      <FilenameWithoutPath>jb_jtag.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\wpjrunner\jb_jtag_stm32.c</PathWithFileName>
+      <FilenameWithoutPath>jb_jtag_stm32.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -378,8 +378,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\src\wpjrunner\jrunner.c</PathWithFileName>
-      <FilenameWithoutPath>jrunner.c</FilenameWithoutPath>
+      <PathWithFileName>.\src\wpjrunner\jrunner_stm32.c</PathWithFileName>
+      <FilenameWithoutPath>jrunner_stm32.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

@@ -378,19 +378,19 @@
           <GroupName>wpjrunner_src</GroupName>
           <Files>
             <File>
-              <FileName>jb_io.c</FileName>
+              <FileName>jb_io_stm32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\wpjrunner\jb_io.c</FilePath>
+              <FilePath>.\src\wpjrunner\jb_io_stm32.c</FilePath>
             </File>
             <File>
-              <FileName>jb_jtag.c</FileName>
+              <FileName>jb_jtag_stm32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\wpjrunner\jb_jtag.c</FilePath>
+              <FilePath>.\src\wpjrunner\jb_jtag_stm32.c</FilePath>
             </File>
             <File>
-              <FileName>jrunner.c</FileName>
+              <FileName>jrunner_stm32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\wpjrunner\jrunner.c</FilePath>
+              <FilePath>.\src\wpjrunner\jrunner_stm32.c</FilePath>
             </File>
           </Files>
         </Group>

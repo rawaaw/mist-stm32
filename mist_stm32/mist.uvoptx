@@ -211,22 +211,6 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>266</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134218886</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\fpga.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/fpga.c\266</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
           <LineNumber>192</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134315810</Address>
@@ -241,7 +225,7 @@
           <Expression>\\mist_stm32\src/main.c\192</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>1</Number>
           <Type>0</Type>
           <LineNumber>426</LineNumber>
           <EnabledFlag>1</EnabledFlag>
@@ -257,9 +241,25 @@
           <Expression>\\mist_stm32\src/fpga.c\426</Expression>
         </Bp>
         <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>436</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\src\fpga.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>276</LineNumber>
+          <LineNumber>398</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -275,7 +275,7 @@
         <Bp>
           <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>436</LineNumber>
+          <LineNumber>408</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>

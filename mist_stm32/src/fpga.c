@@ -255,24 +255,15 @@ static inline void ShiftFpga(unsigned char data)
         if((data >> i) & 1) *AT91C_PIOA_SODR = ALTERA_DATA0;
         *AT91C_PIOA_SODR = ALTERA_DCLK;
 #else
-        HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port /*GPIOE*/, CONF_DATA0_Pin /*Pin8*/, ((data >> i) & 1));
-        HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_SET);
+  //      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_RESET);
+  //      HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port /*GPIOE*/, CONF_DATA0_Pin /*Pin8*/, ((data >> i) & 1));
+  //      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_SET);
 #endif
     }
 }
 
-/* Altera FPGA configuration (JTAG mode) */
-/* https://www.altera.com/support/support-resources/support-centers/devices/cfg-index/cfg-jtag.html */
-RAMFUNC unsigned char ConfigureFpga(char *name){
-  
-  iprintf("Waiting for implementation with wpjrunner.");
-  FatalError(5);
-  return 1;
-}
-
 // Altera FPGA configuration (PS mode. My board has hard wired MSEL0-2 for AS. Can not use this mode)
-#if defined FPGA_PS_MODE
+// try JTAG
 RAMFUNC unsigned char ConfigureFpga(char *name)
 {
     unsigned long i;
@@ -284,8 +275,11 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     // enable outputs
     *AT91C_PIOA_OER = ALTERA_DCLK | ALTERA_DATA0 | ALTERA_NCONFIG;
 #else
-    device_count = 1;
-    VerifyChain();
+    device_count = 1; /* one fpga device in my board */
+    if (VerifyChain()){
+        iprintf("JTAG chain verification failed!\r");
+        FatalError(4);
+    }
 #endif
 
     if(!name)
@@ -323,29 +317,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
         }
     }
 #else
-    for(i=0;i<10;i++) // must be low for at least 500ns
-      HAL_GPIO_WritePin(CONF_NCONFIG_GPIO_Port, CONF_NCONFIG_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(CONF_NCONFIG_GPIO_Port, CONF_NCONFIG_Pin, GPIO_PIN_SET);
-
-    // now wait for NSTATUS to go high.
-    // specs: max 800us
-    i = 1000000;
-    while (i && conf_done == GPIO_PIN_SET){
-      conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
-      if (--i == 0)
-      {
-        iprintf("FPGA NSTATUS is NOT high!\r");
-        FatalError(3);
-      }
-    }
-    /* board has no NSTATUS output pin. Just wait without check */
-    for(i=0; i<100; i++)
-      conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
-    if (conf_done)
-    {
-      iprintf("FPGA NSTATUS is NOT high!\r");
-      FatalError(3);
-    }
+    /* start JTAG programming */
 #endif
 
     DISKLED_ON;
@@ -405,7 +377,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
       FatalError(5);
     }
 #else
-    conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
+//    conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
 //    if (conf_done == GPIO_PIN_RESET) {
 //      iprintf("FPGA Configuration done but contains error... CONF_DONE is LOW\r");
 //      FatalError(5);
@@ -441,23 +413,22 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
 #else
     for ( i = 0; i < 50; i++ )
     {
-      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_RESET);
-      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_SET);
+      //HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_RESET);
+      //HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_SET);
     }
 
     /* Initialization end */
-    conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
-    if (conf_done == GPIO_PIN_RESET) {
+    //conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
+    //if (conf_done == GPIO_PIN_RESET) {
       
-      iprintf("FPGA Initialization finish but contains error: CONF_DONE is %s.\r", conf_done);
+      iprintf("FPGA Initialization finish but contains error: CONF_DONE is %s.\r", 0/*conf_done*/);
       FatalError(5);
-    }
+    //}
 #endif
 
     return 1;
 }
 #endif
-#endif /* FPGA_PS_MODE */
 
 #if 0 //defined MIST_STM32
 RAMFUNC unsigned char ConfigureFpga(char *name){

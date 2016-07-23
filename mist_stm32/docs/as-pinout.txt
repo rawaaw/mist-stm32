@@ -1,9 +1,9 @@
 Signal            STM32   JTAG - Altera  Color
 GND                GND           2       black
-TCK                PE7           1       red
+TCK                PE7           1       yellow
 TDO                PE8           3       orange
-TMS                PE9           5       yellow
-TDI                PE10          9       blue
+TMS                PE9           5       red
+TDI                PE10          9       brown
 
                           AS - Altera  Color
 ALT_CONF_DONE      PE11          3       green

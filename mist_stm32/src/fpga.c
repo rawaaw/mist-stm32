@@ -39,6 +39,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "osd.h"
 #include "fpga.h"
 #include "tos.h"
+#if defined MIST_STM32
+# include "jb_io.h"
+//# include "jb_const.h"
+# include "jb_jtag.h"
+//# include "jb_device.h"
+#endif
 
 #define CMD_HDRID 0xAACA
 
@@ -58,9 +64,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* variables */
 extern int device_count; /* Number of JTAG-comnpatible device in chain */
 extern int device_family; /* Device Family, check jb_device.h for detail */
+extern int ji_info[];
+extern int MAX_JTAG_INIT_CLOCK[];
 
-/* functinos */
+/* functinos jrunner_stm32.c */
+extern int GetDevIdCode(int);
+extern void SetAltDev(int, char*);
+extern void CheckAltDev(int);
 extern int  VerifyChain(void);
+extern int CheckStatus(int);
+extern void Startup(int);
+extern void DriveSignal(int,int,int,int);
 
 #endif
 
@@ -255,9 +269,8 @@ static inline void ShiftFpga(unsigned char data)
         if((data >> i) & 1) *AT91C_PIOA_SODR = ALTERA_DATA0;
         *AT91C_PIOA_SODR = ALTERA_DCLK;
 #else
-  //      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_RESET);
-  //      HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port /*GPIOE*/, CONF_DATA0_Pin /*Pin8*/, ((data >> i) & 1));
-  //      HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port /*GPIOE*/, CONF_DCLK_Pin/*Pin10*/, GPIO_PIN_SET);
+	/* Dump to TDI and drive a positive edge pulse at the same time */
+	DriveSignal(SIG_TDI, ((data >> i) & 1), TCK_TOGGLE, BUFFER_ON);
 #endif
     }
 }
@@ -275,7 +288,10 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     // enable outputs
     *AT91C_PIOA_OER = ALTERA_DCLK | ALTERA_DATA0 | ALTERA_NCONFIG;
 #else
-    device_count = 1; /* one fpga device in my board */
+    device_count = 1; /* one fpga device EP4CE22F17 in my board */
+    SetAltDev(0, "EP4CE22F17");
+    CheckAltDev(device_count);
+
     if (VerifyChain()){
         iprintf("JTAG chain verification failed!\r");
         FatalError(4);
@@ -283,7 +299,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
 #endif
 
     if(!name)
-      name = "CORE    RBF";
+      name = "CORE1   RBF";
 
     // open bitstream file
     if (FileOpen(&file, name) == 0)
@@ -325,8 +341,30 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
     int t = 0;
     int n = file.size >> 3;
 
+#if defined MIST_STM32
+    /* Load PROGRAM instruction */
+    SetupChain(device_count, 1/*dev_seq*/, ji_info, JI_PROGRAM);
+    /* Drive TDI HIGH while moving JSM to SHIFTDR */
+    DriveSignal(SIG_TDI,TDI_HIGH,TCK_QUIET,BUFFER_OFF);
+    Js_Shiftdr();
+    /* Issue MAX_JTAG_INIT_CLOCK clocks in SHIFTDR state */
+    for(i=0; i < MAX_JTAG_INIT_CLOCK[device_family]; i++){
+      DriveSignal(SIG_TDI,TDI_HIGH,TCK_TOGGLE,BUFFER_ON);
+    }
+
+
+    /*Ignore first 44 bytes in the rbf file for Cyclone device*/
+    /*AKL5B15: Ignore Cyclone II devices also                 */
+    int idcode = GetDevIdCode(0);
+    if((idcode > 0x2080000 && idcode < 0x2086000) || (idcode >= 0x20B10DD && idcode <= 0x20B60DD))
+      i = 44;
+    else
+      i = 0;
     /* Loop through every single byte */
-    for ( i = 0; i < file.size; )
+    for (; i < file.size; )
+#else
+    for (i = 0; i < file.size; )
+#endif
     {
         // read sector if 512 (64*8) bytes done
         if ((i & 0x1FF) == 0)
@@ -377,11 +415,13 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
       FatalError(5);
     }
 #else
-//    conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
-//    if (conf_done == GPIO_PIN_RESET) {
-//      iprintf("FPGA Configuration done but contains error... CONF_DONE is LOW\r");
-//      FatalError(5);
-//    }
+    /* AKL (Version1.7): Dump additional 16 bytes of 0xFF at the end of the RBF file */
+    for (i = 0; i < 128; i++ ){
+      DriveSignal(SIG_TDI,1,TCK_TOGGLE,BUFFER_ON);
+    }
+    /* Move JSM to RUNIDLE */
+    Js_Updatedr();
+    Js_Runidle();
 #endif /*ALTERA_DCLK || defined MIST_STM32*/
 
     
@@ -411,37 +451,17 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
       FatalError(5);
     }
 #else
-    for ( i = 0; i < 50; i++ )
-    {
-      //HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_RESET);
-      //HAL_GPIO_WritePin(CONF_DCLK_GPIO_Port, CONF_DCLK_Pin, GPIO_PIN_SET);
-    }
-
-    /* Initialization end */
-    //conf_done = HAL_GPIO_ReadPin(CONF_DONE_GPIO_Port, CONF_DONE_Pin);
-    //if (conf_done == GPIO_PIN_RESET) {
-      
-      iprintf("FPGA Initialization finish but contains error: CONF_DONE is %s.\r", 0/*conf_done*/);
+    if (CheckStatus(1/*dev_seq*/)){
+      iprintf("FPGA Initialization finish but contains error.\r");
       FatalError(5);
-    //}
+    }
+    /* try startup device */
+    Startup(1/*dev_seq*/);
 #endif
 
     return 1;
 }
 #endif
-
-#if 0 //defined MIST_STM32
-RAMFUNC unsigned char ConfigureFpga(char *name){
-  while (1){
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
-    HAL_Delay(100);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-    HAL_Delay(300);
-  }
-  return 0;
-}
-#endif
-
 
 void SendFile(RAFile *file)
 {

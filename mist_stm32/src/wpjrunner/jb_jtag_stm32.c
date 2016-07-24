@@ -273,6 +273,9 @@ int ReadTDO(int bit_count,int data,int inst)
 {
 	unsigned int tdi=0,tdo=0,record=0;
 	unsigned int i,max = inst? (bit_count-1):bit_count;
+  if (max == 0xFFFFFFFF){
+    return -1;
+  }
 
 	for(i=0;i<max;i++)
 	{		

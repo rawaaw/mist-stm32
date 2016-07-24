@@ -14,23 +14,23 @@ extern SPI_HandleTypeDef hspi2;
 
 /* main init functions */
 void spi_init(void);
-void spi_slow();
-void spi_fast();
-void spi_fast_mmc();
-RAMFUNC void spi_wait4xfer_end();
+void spi_slow(void);
+void spi_fast(void);
+void spi_fast_mmc(void);
+RAMFUNC void spi_wait4xfer_end(void);
 
 /* chip select functions */
 void EnableFpga(void);
 void DisableFpga(void);
 void EnableOsd(void);
 void DisableOsd(void);
-void EnableDMode();
-void DisableDMode();
-RAMFUNC void EnableCard();
-RAMFUNC void DisableCard();
+void EnableDMode(void);
+void DisableDMode(void);
+RAMFUNC void EnableCard(void);
+RAMFUNC void DisableCard(void);
 
 /* generic helper */
-unsigned char spi_in();
+unsigned char spi_in(void);
 void spi8(unsigned char parm);
 void spi16(unsigned short parm);
 void spi24(unsigned long parm);
@@ -84,7 +84,7 @@ static inline unsigned char SPI(unsigned char outByte) {
 #endif
 }
 
-static inline unsigned char SPI_READ() {
+static inline unsigned char SPI_READ(void) {
 #if !defined MIST_STM32
   *AT91C_SPI_TDR = 0;
   while (!(*AT91C_SPI_SR & AT91C_SPI_RDRF));

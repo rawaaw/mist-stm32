@@ -35,7 +35,7 @@ int ReadPort(int port)
 /*    Bit     7   6 5 4 3 2 1 0
       Port 1 TDO# - - - - - - -*/
     pin = HAL_GPIO_ReadPin(JTAG_TDO_GPIO_Port, JTAG_TDO_Pin);
-    data = (pin == GPIO_PIN_RESET)? 0x00:0x80;
+    data = (pin == GPIO_PIN_RESET)? 0x80:0x00; /* TDO inversed */
   }else{
     iprintf("error: JTAG ReadPort==0 ???\n");
   }
@@ -73,41 +73,5 @@ void WritePort(int port,int data,int buffer_enable/* not used */)
     iprintf("error: JTAG WritePort==1 ???\n");
   }
   return;
-}
-
-/*****************************/
-/*                           */
-/* File processing functions */
-/*                           */
-/*****************************/
-
-int jb_fopen(char* argv,char* mode)
-{
-	return 0;
-}
-
-int	jb_fclose(int file_id)
-{
-	return 0;
-}
-
-int jb_fseek(int finputid,int start,int end)
-{
-	return 0;
-}
-
-int jb_ftell(int finputid)
-{
-	return 0;
-}
-
-int jb_fgetc(int finputid)
-{
-	return 0;
-}
-
-char* jb_fgets(char* buffer, int finputid)
-{
-	return (char*)0;
 }
 

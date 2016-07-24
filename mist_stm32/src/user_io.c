@@ -961,7 +961,7 @@ void user_io_poll() {
     // arm rs232 and mixes with debug output.
     spi_uio_cmd_cont(UIO_SIO_IN);
     // status byte is 1000000A with A=1 if data is available
-    if((f = spi_in(0)) == 0x81) {
+    if((f = spi_in()) == 0x81) {
       iprintf("\033[1;36m");
       
       // character 0xff is returned if FPGA isn't configured

@@ -13,7 +13,7 @@
 #include "jb_io.h"
 #include "jb_jtag.h"
 #include "jb_const.h"
-#include "jb_device.h"
+#include "jb_device_stm32.h"
 #include "hardware.h"
 
 /* JRunner Controller Functions */

@@ -41,9 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "tos.h"
 #if defined MIST_STM32
 # include "jb_io.h"
-//# include "jb_const.h"
 # include "jb_jtag.h"
-//# include "jb_device.h"
 #endif
 
 #define CMD_HDRID 0xAACA
@@ -63,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* jrunner */
 /* variables */
 extern int device_count; /* Number of JTAG-comnpatible device in chain */
-extern int device_family; /* Device Family, check jb_device.h for detail */
+extern int device_family; /* Device Family, check jb_device_stm32.h for detail */
 extern int ji_info[];
 extern int MAX_JTAG_INIT_CLOCK[];
 

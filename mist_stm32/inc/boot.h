@@ -35,9 +35,9 @@
 #define BLITS           64
 
 //// functions ////
-void BootInit();
+void BootInit(void);
 void BootPrintEx(char * str);
-void BootHome();
+void BootHome(void);
 
 #endif // __BOOT_H__
 

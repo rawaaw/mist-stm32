@@ -3,7 +3,7 @@
 
 #include <inttypes.h>
 
-void StateReset();
+void StateReset(void);
 
 //// type definitions ////
 typedef struct {
@@ -45,7 +45,7 @@ uint8_t StateJoyGetExtra(uint8_t joy_num);
 
 
 // Keep track of connected sticks
-uint8_t StateNumJoysticks();
+uint8_t StateNumJoysticks(void);
 void StateNumJoysticksSet(uint8_t num);
 
  // to get data
@@ -61,13 +61,13 @@ void StateTurboSet ( uint16_t turbo, uint16_t mask, uint8_t joy_num );
 
 // keyboard status
 void StateKeyboardSet( uint8_t modifier, uint8_t* pressed, uint16_t* pressed_ps2); //get usb and ps2 codes
-uint8_t StateKeyboardModifiers();
+uint8_t StateKeyboardModifiers(void);
 void StateKeyboardPressed(uint8_t *pressed);
 void StateKeyboardPressedPS2(uint16_t *keycodes);
 
 // get/set core currently loaded
 void StateCoreNameSet(const char* str);
-char* StateCoreName();
+char* StateCoreName(void);
 
 #endif
 

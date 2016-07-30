@@ -323,7 +323,7 @@ unsigned long GetTimer(unsigned long offset)
     systimer += offset << 20;
     return (systimer); // valid bits [31:20]
 #else
-    return 0;
+    return HAL_GetTick() + offset; // return tick in milliseconds
 #endif
 }
 
@@ -334,7 +334,7 @@ unsigned long CheckTimer(unsigned long time)
     time -= systimer;
     return(time > (1UL << 31));
 #else
-    return 0;
+    return ((long)(HAL_GetTick() - time) > 0);
 #endif
 }
 

@@ -18,6 +18,7 @@
 #include "user_io.h"
 #include "timer.h"
 
+#if !defined MIST_STM32
 // list of supported vid/pid pairs
 static const unsigned short supported_devices[][2] = {
   { 0x067b, 0x2303 }, // Prolific
@@ -502,3 +503,15 @@ static uint8_t pl2303_poll(usb_device_t *dev) {
 
 const usb_device_class_config_t usb_pl2303_class = {
   pl2303_init, pl2303_release, pl2303_poll };  
+
+#else
+int8_t pl2303_is_blocked(void) {
+  return 0;
+}
+int8_t pl2303_present(void) {
+  return 0;
+}
+void pl2303_tx_byte(uint8_t byte) {
+  return;
+}
+#endif

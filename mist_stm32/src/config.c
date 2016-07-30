@@ -28,14 +28,14 @@ RAFile romfile;
 
 
 // TODO fix SPIN macros all over the place!
-#if 0
+#if !defined MIST_STM32
 #define SPIN() asm volatile ( "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0")
 #else
-#warning asm SPIN!!!!!
-#define SPIN()
+#warning asm !!!
+#define SPIN() __NOP();__NOP();__NOP();__NOP();
 #endif
 
 
@@ -333,11 +333,19 @@ unsigned char LoadConfiguration(char *filename)
   int8_t keyboard_present = 0;
   for(i=0;i<3;i++) {
     unsigned long to = GetTimer(1000);
+#if !defined MIST_STM32
     while(!CheckTimer(to))
       usb_poll();
+#else
+    WaitTimer(1000);
+#endif
 
     // check if keyboard just appeared
+#if !defined MIST_STM32
     if(!keyboard_present && hid_keyboard_present()) {
+#else
+    if(!keyboard_present && ps2_keyboard_present()) {
+#endif
       // BootPrintEx("Press F1 for NTSC, F2 for PAL");
       keyboard_present = 1;
       i = 0;

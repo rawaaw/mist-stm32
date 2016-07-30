@@ -129,9 +129,9 @@ void HandleUI(void);
 void PrintDirectory(void);
 void ScrollLongName(void);
 void InfoMessage(char *message);
-void ShowSplash();
-void HideSplash();
-void EjectAllFloppies();
+void ShowSplash(void);
+void HideSplash(void);
+void EjectAllFloppies(void);
 
 #endif
 

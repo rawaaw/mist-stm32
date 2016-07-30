@@ -47,14 +47,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CMD_HDRID 0xAACA
 
 // TODO!
-#if 0
+#if !defined MIST_STM32
 #define SPIN() asm volatile ( "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0");
 #else
-#define SPIN();
 #warning asm !!!
+#define SPIN() __NOP();__NOP();__NOP();__NOP();
 #endif
 
 #if defined MIST_STM32

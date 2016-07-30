@@ -23,7 +23,7 @@ typedef struct {
 
 
 //// functions ////
-void mist_ini_parse();
+void mist_ini_parse(void);
 
 
 //// global variables ////

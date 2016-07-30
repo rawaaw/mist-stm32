@@ -129,16 +129,16 @@ typedef struct {
   uint8_t fifo_stat;       // space in cores input fifo
 } __attribute__ ((packed)) serial_status_t;
 
-void user_io_init();
-void user_io_detect_core_type();
-unsigned char user_io_core_type();
-char minimig_v1();
-char minimig_v2();
-char user_io_is_8bit_with_config_string();
-void user_io_poll();
-char user_io_menu_button();
-char user_io_button_dip_switch1();
-char user_io_user_button();
+void user_io_init(void);
+void user_io_detect_core_type(void);
+unsigned char user_io_core_type(void);
+char minimig_v1(void);
+char minimig_v2(void);
+char user_io_is_8bit_with_config_string(void);
+void user_io_poll(void);
+char user_io_menu_button(void);
+char user_io_button_dip_switch1(void);
+char user_io_user_button(void);
 void user_io_osd_key_enable(char);
 void user_io_serial_tx(char *, uint16_t);
 char *user_io_8bit_get_string(char);
@@ -148,7 +148,7 @@ void user_io_sd_set_config(void);
 char user_io_dip_switch1(void);
 char user_io_serial_status(serial_status_t *, uint8_t);
 void user_io_file_mount(fileTYPE *);
-char *user_io_get_core_name();
+char *user_io_get_core_name(void);
 
 // io controllers interface for FPGA ethernet emulation using usb ethernet
 // devices attached to the io controller (ethernec emulation)
@@ -163,7 +163,7 @@ void user_io_kbd(unsigned char m, unsigned char *k, uint8_t priority);
 char user_io_create_config_name(char *s);
 void user_io_digital_joystick(unsigned char, unsigned char);
 void user_io_analog_joystick(unsigned char, char, char);
-char user_io_osd_is_visible();
+char user_io_osd_is_visible(void);
 void user_io_send_buttons(char);
 
 void user_io_key_remap(char *);

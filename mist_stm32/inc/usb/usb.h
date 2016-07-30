@@ -244,8 +244,8 @@ typedef struct {
 #define USB_DESCRIPTOR_OTHER_SPEED      0x07    // bDescriptorType for a Other Speed Configuration.
 #define USB_DESCRIPTOR_INTERFACE_POWER  0x08    // bDescriptorType for Interface Power.
 
-void usb_init();
-void usb_poll();
+void usb_init(void);
+void usb_poll(void);
 void usb_SetHubPreMask(void);
 void usb_ResetHubPreMask(void);
 

@@ -109,7 +109,7 @@ void OsdDisable(void);
 void OsdWaitVBL(void);
 void OsdReset(unsigned char boot);
 void ConfigFilter(unsigned char lores, unsigned char hires);
-void OsdReconfig(); // Reset to Chameleon core.
+void OsdReconfig(void); // Reset to Chameleon core.
 // deprecated functions from Minimig 1
 void MM1_ConfigFilter(unsigned char lores, unsigned char hires);
 void MM1_ConfigScanlines(unsigned char scanlines);
@@ -127,16 +127,16 @@ void OsdWriteDoubleSize(unsigned char n, char *s, unsigned char pass);
 //void OsdDrawLogo(unsigned char n, char row);
 void OsdDrawLogo(unsigned char n, char row,char superimpose);
 void ScrollText(char n,const char *str, int len, int max_len,unsigned char invert);
-void ScrollReset();
-void StarsInit();
-void StarsUpdate();
+void ScrollReset(void);
+void StarsInit(void);
+void StarsUpdate(void);
 
 void OsdKeySet(unsigned char);
-unsigned char OsdKeyGet();
+unsigned char OsdKeyGet(void);
 
 // get/set core currently loaded
 void OsdCoreNameSet(const char* str);
-char* OsdCoreName();
+char* OsdCoreName(void);
 
 #endif
 

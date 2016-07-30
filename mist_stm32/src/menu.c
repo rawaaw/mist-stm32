@@ -156,14 +156,14 @@ void StateJoySet(unsigned char c, uint8_t joy_num) {
 #define DIRSIZE 8 // number of items in directory display window
 
 // TODO!
-#if 0
+#if !defined MIST_STM32
 #define SPIN() asm volatile ( "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0\n\t" \
                               "mov r0, r0");
 #else
-#warning "assembler part!!!!"
-#define SPIN()
+#warning "asm !!!"
+#define SPIN()  __NOP();__NOP();__NOP();__NOP();
 #endif
 
 unsigned char menustate = MENU_NONE1;

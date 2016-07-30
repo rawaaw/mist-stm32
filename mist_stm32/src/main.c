@@ -193,14 +193,16 @@ int main_stm32(void){
 
     cdc_control_open();
 
-    usb_cdc_open();
+    /*usb_cdc_open(); ??? cdc_control_open() calls inside cdc_control_open() */
 
     while (1) {
       cdc_control_poll();
 
       user_io_poll();
 
+#if !defined MIST_STM32
       usb_poll();
+#endif
 
       // MIST (atari) core supports the same UI as Minimig
       if(user_io_core_type() == CORE_TYPE_MIST) {

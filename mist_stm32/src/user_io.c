@@ -21,6 +21,8 @@
 #include "tos.h"
 #include "errors.h"
 
+#include "ps2.h"
+
 // up to 16 key can be remapped
 #define MAX_REMAP  16
 unsigned char key_remap_table[MAX_REMAP][2];
@@ -1663,8 +1665,12 @@ void user_io_kbd(unsigned char m, unsigned char *k, uint8_t priority) {
 		// send alternating make and break codes for caps lock
 		send_keycode((code & 0xff) | (caps_lock_toggle?BREAK:0));
 		caps_lock_toggle = !caps_lock_toggle;
-		
+
+#if !defined MIST_STM32		
 		hid_set_kbd_led(HID_LED_CAPS_LOCK, caps_lock_toggle);
+#else
+		ps2_set_kbd_led(HID_LED_CAPS_LOCK, caps_lock_toggle);
+#endif
 	      }
 	      if(code & NUM_LOCK_TOGGLE) {
 		// num lock has four states indicated by leds:
@@ -1677,6 +1683,7 @@ void user_io_kbd(unsigned char m, unsigned char *k, uint8_t priority) {
 		  emu_timer = GetTimer(EMU_MOUSE_FREQ);
 		
 		emu_mode = (emu_mode+1)&3;
+#if !defined MIST_STM32
 		if(emu_mode == EMU_MOUSE || emu_mode == EMU_JOY0) 
 		  hid_set_kbd_led(HID_LED_NUM_LOCK, true);
 		else
@@ -1686,6 +1693,17 @@ void user_io_kbd(unsigned char m, unsigned char *k, uint8_t priority) {
 		  hid_set_kbd_led(HID_LED_SCROLL_LOCK, true);
 		else
 		  hid_set_kbd_led(HID_LED_SCROLL_LOCK, false);
+#else
+		if(emu_mode == EMU_MOUSE || emu_mode == EMU_JOY0) 
+		  ps2_set_kbd_led(HID_LED_NUM_LOCK, true);
+		else
+		  ps2_set_kbd_led(HID_LED_NUM_LOCK, false);
+		
+		if(emu_mode == EMU_MOUSE || emu_mode == EMU_JOY1) 
+		  ps2_set_kbd_led(HID_LED_SCROLL_LOCK, true);
+		else
+		  ps2_set_kbd_led(HID_LED_SCROLL_LOCK, false);
+#endif
 	      }
 	    }
 	  }

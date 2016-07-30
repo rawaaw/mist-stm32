@@ -13,7 +13,9 @@
 //// mist_ini_parse() ////
 void mist_ini_parse()
 {
+#if !defined MIST_STM32
   hid_joystick_button_remap_init();
+#endif
   virtual_joystick_remap_init();
   joy_key_map_init();
   ini_parse(&mist_ini_cfg);
@@ -45,7 +47,9 @@ const ini_var_t mist_ini_vars[] = {
   {"JOYSTICK_IGNORE_OSD", (void*)(&(mist_cfg.joystick_ignore_osd)), UINT8, 0, 1, 1},
 	{"KEY_MENU_AS_RGUI", (void*)(&(mist_cfg.key_menu_as_rgui)), UINT8, 0, 1, 1},
   {"KEY_REMAP", (void*)user_io_key_remap, CUSTOM_HANDLER, 0, 0, 1},
+#if !defined MIST_STM32
   {"HID_BUTTON_REMAP", (void*)hid_joystick_button_remap, CUSTOM_HANDLER, 0, 0, 1},
+#endif
   {"JOYSTICK_REMAP", (void*)virtual_joystick_remap, CUSTOM_HANDLER, 0, 0, 1},
   {"JOY_KEY_MAP", (void*)joystick_key_map, CUSTOM_HANDLER, 0, 0, 1}
   

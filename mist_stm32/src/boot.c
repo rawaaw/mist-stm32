@@ -19,9 +19,9 @@
                               "mov r0, r0\n\t" \
                               "mov r0, r0");
 #else
-#warning asm!!!!!
+#warning asm !!!
 //#define SPIN() __asm{mov r0,1;mov r0,1;mov r0,1;mov r0,1;mov r0,1};
-#define SPIN()
+#define SPIN() __NOP();__NOP();__NOP();__NOP();
 #endif
 
 static void mem_upload_init(unsigned long addr) {

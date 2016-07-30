@@ -93,4 +93,14 @@ void bzero (void *s, uint32_t n){
   return;
 }
 
+uint8_t usb_rtc_get_time(uint8_t *d){
+  return 0;
+}
 
+uint8_t usb_rtc_set_time(uint8_t *d){
+  return 0;
+}
+
+uint8_t hid_get_joysticks(void){
+  return 0;
+}

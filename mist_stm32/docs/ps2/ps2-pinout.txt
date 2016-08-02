@@ -1,0 +1,4 @@
+1 - data   - green
+3 - ground - black
+4 - 5V     - red
+5 - clock  - yellow

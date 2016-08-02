@@ -58,6 +58,7 @@ static void MX_GPIO_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_SDIO_SD_Init(void);
+static void MX_NVIC_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -90,6 +91,9 @@ int main(void)
   MX_USART1_UART_Init();
   MX_SDIO_SD_Init();
   MX_USB_DEVICE_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -156,6 +160,21 @@ void SystemClock_Config(void)
 
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
+}
+
+/** NVIC Configuration
+*/
+static void MX_NVIC_Init(void)
+{
+  /* EXTI0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 1);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+  /* EXTI2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 2);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+  /* OTG_FS_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(OTG_FS_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(OTG_FS_IRQn);
 }
 
 /* SDIO init function */
@@ -244,17 +263,23 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PS2_KBD_SCK_Pin PS2_MOUSE_SCK_Pin DISKLED_Pin LED_Pin */
-  GPIO_InitStruct.Pin = PS2_KBD_SCK_Pin|PS2_MOUSE_SCK_Pin|DISKLED_Pin|LED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  /*Configure GPIO pins : PS2_KBD_SCK_Pin PS2_MOUSE_SCK_Pin */
+  GPIO_InitStruct.Pin = PS2_KBD_SCK_Pin|PS2_MOUSE_SCK_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PS2_KBD_DATA_Pin PS2_MOUSE_DATA_Pin */
   GPIO_InitStruct.Pin = PS2_KBD_DATA_Pin|PS2_MOUSE_DATA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : DISKLED_Pin LED_Pin */
+  GPIO_InitStruct.Pin = DISKLED_Pin|LED_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SS0_Pin SS2_FPGA_Pin */
@@ -279,7 +304,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, PS2_KBD_SCK_Pin|PS2_MOUSE_SCK_Pin|DISKLED_Pin|LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DISKLED_Pin|LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, SS0_Pin|SS2_FPGA_Pin, GPIO_PIN_RESET);

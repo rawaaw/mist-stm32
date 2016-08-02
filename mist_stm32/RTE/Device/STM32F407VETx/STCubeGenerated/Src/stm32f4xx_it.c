@@ -180,6 +180,7 @@ void SysTick_Handler(void)
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
   /* USER CODE BEGIN SysTick_IRQn 1 */
+  PS2_IncCounter(); /* PS2 keyboard watchdog counter */
 
   /* USER CODE END SysTick_IRQn 1 */
 }

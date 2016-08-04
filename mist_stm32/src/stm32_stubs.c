@@ -4,18 +4,6 @@
 #include <inttypes.h>
 
 
-void AT91F_Spurious_handler(void){
-  return;
-}
-
-void AT91F_Default_IRQ_handler(void){
-  return;
-}
-
-void AT91F_Default_FIQ_handler(void){
-  return;
-}
-
 uint8_t StateJoyGet (uint8_t joy_num){
   return 0;
 }

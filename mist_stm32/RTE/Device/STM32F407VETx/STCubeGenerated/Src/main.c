@@ -289,8 +289,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SS3_OSD_Pin SS4_SD_DIRECT_Pin */
-  GPIO_InitStruct.Pin = SS3_OSD_Pin|SS4_SD_DIRECT_Pin;
+  /*Configure GPIO pins : SS3_OSD_Pin SS4_SD_DIRECT_Pin CONF_DATA0_Pin */
+  GPIO_InitStruct.Pin = SS3_OSD_Pin|SS4_SD_DIRECT_Pin|CONF_DATA0_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -310,7 +310,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, SS0_Pin|SS2_FPGA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, SS3_OSD_Pin|SS4_SD_DIRECT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, SS3_OSD_Pin|SS4_SD_DIRECT_Pin|CONF_DATA0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, JTAG_TCK_Pin|JTAG_TMS_Pin|JTAG_TDI_Pin, GPIO_PIN_RESET);

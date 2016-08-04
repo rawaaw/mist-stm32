@@ -65,6 +65,8 @@
 #define SS3_OSD_GPIO_Port GPIOB
 #define SS4_SD_DIRECT_Pin GPIO_PIN_1
 #define SS4_SD_DIRECT_GPIO_Port GPIOB
+#define CONF_DATA0_Pin GPIO_PIN_2
+#define CONF_DATA0_GPIO_Port GPIOB
 #define JTAG_TCK_Pin GPIO_PIN_7
 #define JTAG_TCK_GPIO_Port GPIOE
 #define JTAG_TDO_Pin GPIO_PIN_8

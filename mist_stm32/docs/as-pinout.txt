@@ -1,9 +1,27 @@
+FPGA configuration (via JTAG):
+
 Signal            STM32   JTAG - Altera  Color
+
 GND                GND           2       black
 TCK                PE7           1       yellow
 TDO                PE8           3       orange
 TMS                PE9           5       red
 TDI                PE10          9       brown
 
-                          AS - Altera  Color
-ALT_CONF_DONE      PE11          3       green
+                          AS - Altera    Color
+
+ALT_CONF_DONE      PE11          3       green  (not used because JTAG says FPGA status after confgiration done)
+
+=================================================
+Interconnection with loaded system:
+
+Signal            STM32  IO_brd   FPGA   Color
+
+GND                GND    GND            black
+SPI_DI (stm MOSI)  PB15   clk5     M1    white
+SPI_DO (stm MISO)  PB14   IO_A20   K1    grey
+SPI_SCK (stm SCK)  PB13   clk4     M2    blue
+SPI_SS2            PC5    clk3     T9    green
+SPI_SS3            PB0    clk2     R9    yellow
+SPI_SS4            PB1    clk1     T8    orange
+CONF_DATA0         PB2    clk0     R8    red

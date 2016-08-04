@@ -956,7 +956,7 @@ void HandleUI(void)
 			parentstate=MENU_8BIT_MAIN1;
 			
 			// set helptext with core display on top of basic info
-			siprintf(helptext_custom, HELPTEXT_SPACER);
+			siprintf(helptext_custom, (char*)HELPTEXT_SPACER);
 			strcat(helptext_custom, OsdCoreName());
 			strcat(helptext_custom, helptexts[HELPTEXT_MAIN]);
 			helptext=helptext_custom;

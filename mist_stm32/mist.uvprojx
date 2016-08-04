@@ -332,9 +332,9 @@
             <v6WtE>0</v6WtE>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>MIST_STM32,USE_HAL_DRIVER,STM32F407xx</Define>
+              <Define>MIST_STM32,USE_HAL_DRIVER,STM32F407xx,MIST_STM32_DBG=0</Define>
               <Undefine></Undefine>
-              <IncludePath>.\inc;.\inc\usb;.\inc\wpjrunner;.\inc\ps2;.\RTE\Device\STM32F407VETx\STCubeGenerated\Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/STM32F4xx_HAL_Driver/Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;.\RTE\Device\STM32F407VETx\STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Core/Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/CMSIS/Include;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/CMSIS/Device/ST/STM32F4xx/Include</IncludePath>
+              <IncludePath>.\inc;.\inc\usb;.\inc\wpjrunner;.\inc\ps2;.\RTE\Device\STM32F407VETx\STCubeGenerated\Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/STM32F4xx_HAL_Driver/Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;.\RTE\Device\STM32F407VETx\STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Core/Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/CMSIS/Include;.\RTE\Device\STM32F407VETx\STCubeGenerated/Drivers/CMSIS/Device/ST/STM32F4xx/Include;.\inc\printf</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -436,6 +436,26 @@
               <FileName>ps2.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\inc\ps2\ps2.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>printf_src</GroupName>
+          <Files>
+            <File>
+              <FileName>printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\printf\printf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>printf_inc</GroupName>
+          <Files>
+            <File>
+              <FileName>printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\inc\printf\printf.h</FilePath>
             </File>
           </Files>
         </Group>

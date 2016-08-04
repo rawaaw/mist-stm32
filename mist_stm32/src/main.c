@@ -125,12 +125,7 @@ int main_stm32(void){
 
     USART_Init(115200);
 #else
-#if 0
-    extern UART_HandleTypeDef huart1;
-    while (1){
-      HAL_UART_Transmit(&huart1, "Test ", 5, 1000);  
-    }
-#endif
+    _init_printf();
 #endif
 
     iprintf("\rMinimig by Dennis van Weeren");

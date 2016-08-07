@@ -125,7 +125,7 @@ int main_stm32(void){
 
     USART_Init(115200);
 #else
-    _init_printf();
+    /*_init_printf();*/ /* uncomment in case tinyprintf used */
 #endif
 
     iprintf("\rMinimig by Dennis van Weeren");
@@ -184,7 +184,7 @@ int main_stm32(void){
     // parse mist.ini
     mist_ini_parse();
 
-    fpga_init(NULL);
+    /*  fpga_init(NULL); */
 
     cdc_control_open();
 
@@ -201,30 +201,30 @@ int main_stm32(void){
 
       // MIST (atari) core supports the same UI as Minimig
       if(user_io_core_type() == CORE_TYPE_MIST) {
-	if(!fat_medium_present()) 
-	  tos_eject_all();
+        if(!fat_medium_present()) 
+          tos_eject_all();
 
-	HandleUI();
+        HandleUI();
       }
 
       // call original minimig handlers if minimig core is found
       if((user_io_core_type() == CORE_TYPE_MINIMIG) ||
-	 (user_io_core_type() == CORE_TYPE_MINIMIG2)) {
-	if(!fat_medium_present()) 
-	  EjectAllFloppies();
+          (user_io_core_type() == CORE_TYPE_MINIMIG2)) {
+        if(!fat_medium_present()) 
+          EjectAllFloppies();
 
-	HandleFpga();
-	HandleUI();
+        HandleFpga();
+        HandleUI();
       }
 
       // 8 bit cores can also have a ui if a valid config string can be read from it
       if((user_io_core_type() == CORE_TYPE_8BIT) && 
-	 user_io_is_8bit_with_config_string())
-	HandleUI();
+          user_io_is_8bit_with_config_string())
+        HandleUI();
 
       // Archie core will get its own treatment one day ...
       if(user_io_core_type() == CORE_TYPE_ARCHIE)
-	HandleUI();
+        HandleUI();
     }
     return 0;
 }

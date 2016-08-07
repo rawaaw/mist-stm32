@@ -5,15 +5,16 @@
 
 #if defined MIST_STM32
 # define VDATE "0.01"
-# include "printf.h"
+/*# include "printf.h"*/
 # if defined MIST_STM32_DBG && MIST_STM32_DBG == 1
 //#  warning "Use debug output!!!"
-#  define iprintf tfp_printf
+#  define iprintf printf
+#  define siprintf sprintf
 # else
 //#  warning "No debug output!!!"
 #  define iprintf(...)
 # endif
-# define siprintf tfp_sprintf
+# define siprintf sprintf
 #endif
 
 

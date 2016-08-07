@@ -3,7 +3,8 @@
 */
 #include <string.h>
 #include "stm32f4xx_hal.h"
-//#include "AT91SAM7S256.h"
+#include "usbd_cdc_if.h"
+
 
 
 uint8_t StateJoyGet (uint8_t joy_num){
@@ -87,6 +88,9 @@ uint8_t hid_get_joysticks(void){
   return 0;
 }
 
+
+/* from usb/usbrtc.c: */
+
 /* RTC functions */
 extern RTC_HandleTypeDef hrtc;
 
@@ -133,3 +137,75 @@ uint8_t usb_rtc_set_time(uint8_t *d){
   return (rc == HAL_OK);
 }
 
+/* from cdc_enumerate.c : */
+typedef unsigned char  uchar;
+typedef unsigned short ushort;
+typedef unsigned int   uint;
+
+void usb_cdc_open(void) {
+  return;
+}
+
+//*----------------------------------------------------------------------------
+//* \fn    usb_cdc_is_configured
+//* \brief Test if the device is configured
+//*----------------------------------------------------------------------------
+uchar usb_cdc_is_configured(void) {
+  return 1;
+}
+
+uint16_t usb_cdc_read(char *pData, uint16_t length) {
+  uint32_t nbBytesRcv = 0;
+  
+  if ( !usb_cdc_is_configured() )
+    return 0;
+  nbBytesRcv = CDC_GetRxBufferChars();
+  if (nbBytesRcv > 0){
+    memcpy(pData, CDC_GetRxBuffer(), (nbBytesRcv < length)? nbBytesRcv:length);
+    CDC_ClearRxBufferChars();
+  }
+  return (uint16_t)((nbBytesRcv < length)? nbBytesRcv:length);
+}
+
+
+uint usb_cdc_write(const char *pData, uint length) {
+  uint8_t *dt_buf;
+  uint dt_size = 0;
+  uint32_t portion_size;
+  uint8_t rc = USBD_OK;
+
+  if(usb_cdc_is_configured()) {
+    dt_buf = CDC_GetTxBuffer();
+    while (dt_size < length){
+      if (rc == USBD_OK){
+        portion_size = (CDC_GetTxBufferSize() < length)? CDC_GetTxBufferSize():length;
+        memcpy(dt_buf, pData, portion_size);
+      }
+
+      rc = CDC_Transmit_FS(dt_buf, portion_size);
+
+      if (rc == USBD_OK) {
+        pData += portion_size;
+        dt_size += portion_size;
+      }else{
+        /* EP busy ?*/
+        HAL_Delay(1);
+      }
+    }
+  }
+  return dt_size;
+}
+
+/* from pl2303.c: */
+
+int8_t pl2303_is_blocked(void) {
+  return 0;
+}
+
+void pl2303_tx_byte(uint8_t byte) {
+  return;
+}
+
+int8_t pl2303_present(void) {
+  return 0;
+}

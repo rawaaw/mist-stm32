@@ -59,8 +59,9 @@
 /* USER CODE BEGIN PRIVATE_DEFINES */
 /* Define size for the receive and transmit buffer over CDC */
 /* It's up to user to redefine and/or remove those define */
-#define APP_RX_DATA_SIZE  4
-#define APP_TX_DATA_SIZE  4
+#define APP_RX_DATA_SIZE  64
+#define APP_TX_DATA_SIZE  64
+uint32_t rx_data_size = 0;
 /* USER CODE END PRIVATE_DEFINES */
 /**
   * @}
@@ -252,6 +253,7 @@ static int8_t CDC_Receive_FS (uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+  rx_data_size += *Len; /*??? __HAL_LOCK / UNLOCK ??? */
   return (USBD_OK);
   /* USER CODE END 6 */ 
 }
@@ -282,6 +284,32 @@ uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
+uint8_t* CDC_GetRxBuffer(void)
+{
+  return UserRxBufferFS;  
+}
+
+
+uint8_t* CDC_GetTxBuffer(void)
+{
+  return UserTxBufferFS;  
+}
+
+uint8_t CDC_GetTxBufferSize(void){
+  return sizeof(UserTxBufferFS);
+}
+
+uint32_t CDC_GetRxBufferChars(void)
+{
+  return rx_data_size;
+}
+
+void CDC_ClearRxBufferChars(void)
+{
+  rx_data_size = 0;
+  return;
+}
+
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 
 /**

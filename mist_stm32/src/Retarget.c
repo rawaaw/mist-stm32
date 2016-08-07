@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <rt_misc.h>
+#include "stm32f4xx_hal.h"
 
 #pragma import(__use_no_semihosting_swi)
 
@@ -19,6 +20,7 @@ extern int  sendchar(int ch);  /* in Serial.c */
 extern int  getkey(void);      /* in Serial.c */
 extern long timeval;           /* in Time.c   */
 
+extern UART_HandleTypeDef huart1;
 
 struct __FILE { int handle; /* Add whatever you need here */ };
 FILE __stdout;
@@ -26,6 +28,7 @@ FILE __stdin;
 
 
 int fputc(int ch, FILE *f) {
+  HAL_UART_Transmit_IT(&huart1, (uint8_t*)&ch, 1);
   return 0;
 //  return (sendchar(ch));
 }
@@ -43,6 +46,7 @@ int ferror(FILE *f) {
 
 
 void _ttywrch(int ch) {
+  HAL_UART_Transmit_IT(&huart1, (uint8_t*)&ch, 1);
 //  sendchar (ch);
 }
 

@@ -289,7 +289,7 @@ uchar usb_cdc_is_configured(void) {
 #if !defined MIST_STM32
   return AT91C_BASE_UDP->UDP_GLBSTATE & AT91C_UDP_CONFG;
 #else
-  return 0;
+  return 1;
 #endif
 }
 

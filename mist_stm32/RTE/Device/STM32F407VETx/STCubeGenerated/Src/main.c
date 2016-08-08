@@ -96,7 +96,8 @@ int main(void)
   MX_RTC_Init();
 
   /* USER CODE BEGIN 2 */
-
+  /* Workaround .after power on SD card initialized improperly */
+  MX_SDIO_SD_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,7 +105,7 @@ int main(void)
 #if 0
   while (1)
   {
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
     HAL_Delay(1000);
   /* USER CODE END WHILE */
 
@@ -396,7 +397,7 @@ void Error_Handler(void)
 #if !defined MIST_STM32_DBG
   while(1) 
   {
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
     HAL_Delay(240);
   }
 #else

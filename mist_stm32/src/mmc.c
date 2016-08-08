@@ -220,7 +220,6 @@ unsigned char MMC_Init(void)
 #endif
 }
 
-
 // Read single 512-byte block
 RAMFUNC unsigned char MMC_Read(unsigned long lba, unsigned char *pReadBuffer)
 {
@@ -229,14 +228,17 @@ RAMFUNC unsigned char MMC_Read(unsigned long lba, unsigned char *pReadBuffer)
     HAL_SD_ErrorTypedef  st;
     HAL_SD_CardStatusTypedef CardStatus;
  
-    st = HAL_SD_GetCardStatus  (&hsd, &CardStatus);
+    st = HAL_SD_GetCardStatus(&hsd, &CardStatus);
+    if (st != SD_OK)
+      return 0;
  
     if (pReadBuffer){
-      rc = HAL_SD_ReadBlocks  (&hsd, (uint32_t*)pReadBuffer, (lba << 9), 512, 1);
+      rc = HAL_SD_ReadBlocks(&hsd, (uint32_t*)pReadBuffer, (lba << 9), 512, 1);
     } else {
       /* !!! spi emulatlor will be used !!!*/
       rc = SD_UNSUPPORTED_FEATURE;
     }
+    
     return(rc == SD_OK);
 #else
     // if pReadBuffer is NULL then use direct to the FPGA transfer mode (FPGA2 asserted)

@@ -1394,7 +1394,7 @@
         <RecentRowIndex>0</RecentRowIndex>
         <RectRecentDocked>
           <Len>16</Len>
-          <Data>95010000DA02000095010000DA020000</Data>
+          <Data>A3040000660000008D05000010020000</Data>
         </RectRecentDocked>
         <RectRecentFloat>
           <Len>16</Len>
@@ -3426,9 +3426,9 @@
       </Doc>
       <Doc>
         <Name>.\RTE\Device\STM32F407VETx\STCubeGenerated\Src\main.c</Name>
-        <ColumnNumber>0</ColumnNumber>
+        <ColumnNumber>2</ColumnNumber>
         <TopLine>76</TopLine>
-        <CurrentLine>77</CurrentLine>
+        <CurrentLine>99</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

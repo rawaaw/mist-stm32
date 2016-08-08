@@ -760,20 +760,27 @@ void user_io_poll() {
     else {
       // core type has changed
       if(++ct_cnt == 255) {
-	  USB_LOAD_VAR = USB_LOAD_VALUE;
-	// wait for a new valid core id to appear
-	while((ct &  0xf0) != 0xa0) {
-	  EnableIO();
-	  ct = SPI(0xff);
-	  DisableIO();
-	  SPI(0xff);      // needed for old minimig core
-	}
-
-	// reset io controller to cope with new core
 #if !defined MIST_STM32
-	*AT91C_RSTC_RCR = 0xA5 << 24 | AT91C_RSTC_PERRST | AT91C_RSTC_PROCRST; // restart
+        USB_LOAD_VAR = USB_LOAD_VALUE;
+#else
+# warning raw access to register memory !!!!
 #endif
-	for(;;);
+        // wait for a new valid core id to appear
+#if !defined MIST_STM32
+        while((ct &  0xf0) != 0xa0) {
+          EnableIO();
+          ct = SPI(0xff);
+          DisableIO();
+          SPI(0xff);      // needed for old minimig core
+        }
+#endif
+
+        // reset io controller to cope with new core
+#if !defined MIST_STM32
+        *AT91C_RSTC_RCR = 0xA5 << 24 | AT91C_RSTC_PERRST | AT91C_RSTC_PROCRST; // restart
+#endif
+        iprintf("\r\nNo fpga board found :(\r\n");
+        for(;;);
       }
     }
 

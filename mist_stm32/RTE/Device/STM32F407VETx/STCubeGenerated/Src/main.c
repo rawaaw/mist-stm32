@@ -61,7 +61,6 @@ static void MX_SPI2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_SDIO_SD_Init(void);
 static void MX_RTC_Init(void);
-static void MX_NVIC_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -95,9 +94,6 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_USB_DEVICE_Init();
   MX_RTC_Init();
-
-  /* Initialize interrupts */
-  MX_NVIC_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -173,24 +169,6 @@ void SystemClock_Config(void)
 
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
-}
-
-/** NVIC Configuration
-*/
-static void MX_NVIC_Init(void)
-{
-  /* EXTI0_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(EXTI0_IRQn, 6, 0);
-  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
-  /* EXTI2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
-  /* OTG_FS_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(OTG_FS_IRQn, 1, 0);
-  HAL_NVIC_EnableIRQ(OTG_FS_IRQn);
-  /* USART1_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
-  HAL_NVIC_EnableIRQ(USART1_IRQn);
 }
 
 /* RTC init function */
@@ -392,6 +370,13 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, JTAG_TCK_Pin|JTAG_TMS_Pin|JTAG_TDI_Pin, GPIO_PIN_RESET);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
 
 }
 

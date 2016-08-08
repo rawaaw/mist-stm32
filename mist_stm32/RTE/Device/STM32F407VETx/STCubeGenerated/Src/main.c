@@ -321,7 +321,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PS2_KBD_SCK_Pin PS2_MOUSE_SCK_Pin */
   GPIO_InitStruct.Pin = PS2_KBD_SCK_Pin|PS2_MOUSE_SCK_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 

@@ -1,7 +1,7 @@
 #include "spi.h"
 #include "hardware.h"
 
-void spi_init() {
+void spi_init(void) {
 #if !defined MIST_STM32
     // Enable the peripheral clock in the PMC
     AT91C_BASE_PMC->PMC_PCER = 1 << AT91C_ID_SPI;
@@ -20,78 +20,100 @@ void spi_init() {
 #endif
 }
 
-RAMFUNC void spi_wait4xfer_end() {
+RAMFUNC void spi_wait4xfer_end(void) {
 #if !defined MIST_STM32
   while (!(*AT91C_SPI_SR & AT91C_SPI_TXEMPTY));
   
   /* Clear any data left in the receiver */
   (void)*AT91C_SPI_RDR;
   (void)*AT91C_SPI_RDR;
+#else
+  HAL_SPI_StateTypeDef rc;
+  do {
+    rc = HAL_SPI_GetState(&hspi2);
+    if (rc == HAL_SPI_STATE_RESET || rc == HAL_SPI_STATE_ERROR)
+      return;
+  }
+  while (rc != HAL_SPI_STATE_READY);
 #endif
 }
 
-void EnableFpga()
+void EnableFpga(void)
 {
 #if !defined MIST_STM32
     *AT91C_PIOA_CODR = FPGA0;  // clear output
+#else
+    HAL_GPIO_WritePin(SS2_FPGA_GPIO_Port, SS2_FPGA_Pin, GPIO_PIN_RESET);
 #endif
 }
 
-void DisableFpga()
+void DisableFpga(void)
 {
 #if !defined MIST_STM32
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA0;  // set output
+#else
+    HAL_GPIO_WritePin(SS2_FPGA_GPIO_Port, SS2_FPGA_Pin, GPIO_PIN_SET);
 #endif
 }
 
-void EnableOsd()
+void EnableOsd(void)
 {
 #if !defined MIST_STM32
     *AT91C_PIOA_CODR = FPGA1;  // clear output
+#else
+    HAL_GPIO_WritePin(SS3_OSD_GPIO_Port, SS3_OSD_Pin, GPIO_PIN_RESET);
 #endif
 }
 
-void DisableOsd()
+void DisableOsd(void)
 {
 #if !defined MIST_STM32
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA1;  // set output
+#else
+    spi_wait4xfer_end();
+    HAL_GPIO_WritePin(SS3_OSD_GPIO_Port, SS3_OSD_Pin, GPIO_PIN_SET);
 #endif
 }
 
-void EnableIO() {
+void EnableIO(void) {
 #if !defined MIST_STM32
     *AT91C_PIOA_CODR = FPGA3;  // clear output
+#else
+    HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port, CONF_DATA0_Pin, GPIO_PIN_RESET);
 #endif
 }
 
-void DisableIO() {
+void DisableIO(void) {
 #if !defined MIST_STM32
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA3;  // set output
+#else
+    spi_wait4xfer_end();
+    HAL_GPIO_WritePin(CONF_DATA0_GPIO_Port, CONF_DATA0_Pin, GPIO_PIN_SET);
 #endif
 }
 
-void EnableDMode() {
+void EnableDMode(void) {
 #if !defined MIST_STM32
   *AT91C_PIOA_CODR = FPGA2;    // enable FPGA2 output
 #endif
 }
 
-void DisableDMode() {
+void DisableDMode(void) {
 #if !defined MIST_STM32
   *AT91C_PIOA_SODR = FPGA2;    // disable FPGA2 output
 #endif
 }
 
-RAMFUNC void EnableCard() {
+RAMFUNC void EnableCard(void) {
 #if !defined MIST_STM32
   *AT91C_PIOA_CODR = MMC_SEL;  // clear output (MMC chip select enabled)
 #endif
 }
 
-RAMFUNC void DisableCard() {
+RAMFUNC void DisableCard(void) {
 #if !defined MIST_STM32
   spi_wait4xfer_end();
   *AT91C_PIOA_SODR = MMC_SEL;  // set output (MMC chip select disabled)
@@ -163,20 +185,20 @@ void spi_block_write(char *addr) {
   spi_write(addr, 512);
 }
 
-void spi_slow() {
+void spi_slow(void) {
 #if !defined MIST_STM32
   AT91C_SPI_CSR[0] = AT91C_SPI_CPOL | (SPI_SLOW_CLK_VALUE << 8) | (2 << 24); // init clock 100-400 kHz
 #endif
 }
 
-void spi_fast() {
+void spi_fast(void) {
 #if !defined MIST_STM32
   // set appropriate SPI speed for SD/SDHC card (max 25 Mhz)
   AT91C_SPI_CSR[0] = AT91C_SPI_CPOL | (SPI_SDC_CLK_VALUE << 8); // 24 MHz SPI clock
 #endif
 }
 
-void spi_fast_mmc() {
+void spi_fast_mmc(void) {
 #if !defined MIST_STM32
   // set appropriate SPI speed for MMC card (max 20Mhz)
   AT91C_SPI_CSR[0] = AT91C_SPI_CPOL | (SPI_MMC_CLK_VALUE << 8); // 16 MHz SPI clock
@@ -184,7 +206,7 @@ void spi_fast_mmc() {
 }
 
 /* generic helper */
-unsigned char spi_in() {
+unsigned char spi_in(void) {
   return SPI(0);
 }
 

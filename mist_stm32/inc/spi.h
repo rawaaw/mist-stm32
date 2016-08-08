@@ -4,7 +4,11 @@
 #include "AT91SAM7S256.h"
 #include <inttypes.h>
 
-#define RAMFUNC __attribute__ ((long_call, section (".ramsection")))
+#if !defined MIST_STM32
+# define RAMFUNC __attribute__ ((long_call, section (".ramsection")))
+#else
+# define RAMFUNC
+#endif
 
 #include "hardware.h"
 
@@ -24,6 +28,8 @@ void EnableFpga(void);
 void DisableFpga(void);
 void EnableOsd(void);
 void DisableOsd(void);
+void EnableIO(void);
+void DisableIO(void);
 void EnableDMode(void);
 void DisableDMode(void);
 RAMFUNC void EnableCard(void);

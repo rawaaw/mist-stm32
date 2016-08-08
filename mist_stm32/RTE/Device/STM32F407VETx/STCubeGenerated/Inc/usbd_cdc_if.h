@@ -99,6 +99,7 @@ extern USBD_CDC_ItfTypeDef  USBD_Interface_fops_FS;
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
+int8_t CDC_IsTransmitterBusy(void);
 uint8_t* CDC_GetRxBuffer(void);
 uint8_t* CDC_GetTxBuffer(void);
 uint8_t  CDC_GetTxBufferSize(void);

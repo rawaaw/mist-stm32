@@ -284,6 +284,16 @@ uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
 }
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
+int8_t CDC_IsTransmitterBusy(void){
+  USBD_CDC_HandleTypeDef   *hcdc = (USBD_CDC_HandleTypeDef*)hUsbDeviceFS.pClassData;
+  if(hcdc != NULL){
+    return hcdc->TxState;
+  }
+  return -1;
+}
+
+
+
 uint8_t* CDC_GetRxBuffer(void)
 {
   return UserRxBufferFS;  

@@ -28,6 +28,12 @@ FILE __stdin;
 
 
 int fputc(int ch, FILE *f) {
+  HAL_UART_StateTypeDef rc;
+  do {
+    rc = HAL_UART_GetState(&huart1);
+    if (rc == HAL_UART_STATE_RESET || rc == HAL_UART_STATE_ERROR)
+      return EOF;
+  }while (rc != HAL_UART_STATE_READY);
   HAL_UART_Transmit_IT(&huart1, (uint8_t*)&ch, 1);
   return 0;
 //  return (sendchar(ch));
@@ -46,6 +52,12 @@ int ferror(FILE *f) {
 
 
 void _ttywrch(int ch) {
+  HAL_UART_StateTypeDef rc;
+  do {
+    rc = HAL_UART_GetState(&huart1);
+    if (rc == HAL_UART_STATE_RESET || rc == HAL_UART_STATE_ERROR)
+      return;
+  }while (rc != HAL_UART_STATE_READY);
   HAL_UART_Transmit_IT(&huart1, (uint8_t*)&ch, 1);
 //  sendchar (ch);
 }

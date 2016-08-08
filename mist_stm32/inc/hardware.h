@@ -28,8 +28,8 @@
 #define DISKLED       AT91C_PIO_PA29
 #define DISKLED_ON    *AT91C_PIOA_CODR = DISKLED;
 #define DISKLED_OFF   *AT91C_PIOA_SODR = DISKLED;
-#define MMC_SEL       AT91C_PIO_PA31
-#define USB_SEL       AT91C_PIO_PA11
+#define MMC_SEL       AT91C_PIO_PA31  /* schematics: SS1 */
+#define USB_SEL       AT91C_PIO_PA11  /* schematics: SS0 */
 #define USB_PUP       AT91C_PIO_PA16
 #define SD_WP         AT91C_PIO_PA1
 #define SD_CD         AT91C_PIO_PA0
@@ -68,11 +68,11 @@
 #define JOY0  (JOY0_UP|JOY0_DOWN|JOY0_LEFT|JOY0_RIGHT|JOY0_BTN1|JOY0_BTN2)
 
 // chip selects for FPGA communication
-#define FPGA0 AT91C_PIO_PA10
-#define FPGA1 AT91C_PIO_PA3
-#define FPGA2 AT91C_PIO_PA2
+#define FPGA0 AT91C_PIO_PA10          /* schematics: SS2/FPGA */
+#define FPGA1 AT91C_PIO_PA3           /* schematics: SS3/OSD */
+#define FPGA2 AT91C_PIO_PA2           /* schematics: SS4/SD_DIRECT */
 
-#define FPGA3         AT91C_PIO_PA9   // same as ALTERA_DATA0
+#define FPGA3         AT91C_PIO_PA9   /* schematics: CONF_DATA0 */ // same as ALTERA_DATA0
 
 #define VBL           AT91C_PIO_PA7
 

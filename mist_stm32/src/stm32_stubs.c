@@ -73,7 +73,15 @@ void StateUsbJoySet (uint8_t usbjoy, uint8_t usbextra, uint8_t joy_num){
 }
 
 char* itoa (int value, char * str, int base){
-  return (char*)0;
+  if (base == 10)
+    sprintf(str, "%d", value);
+  else if (base == 16)
+    sprintf(str, "%x", value);
+  else if (base == 8)
+    sprintf(str, "%o", value);
+  else
+    sprintf(str, "%d", value);
+  return str;
 }
 
 void bzero (void *s, uint32_t n){
@@ -151,7 +159,7 @@ void usb_cdc_open(void) {
 //* \brief Test if the device is configured
 //*----------------------------------------------------------------------------
 uchar usb_cdc_is_configured(void) {
-  return 1;
+  return (CDC_IsTransmitterBusy() != -1); /* -1 means CDC is not initialized */
 }
 
 uint16_t usb_cdc_read(char *pData, uint16_t length) {
@@ -175,18 +183,25 @@ uint usb_cdc_write(const char *pData, uint length) {
   uint8_t rc = USBD_OK;
 
   if(usb_cdc_is_configured()) {
+    
     dt_buf = CDC_GetTxBuffer();
     while (dt_size < length){
-      if (rc == USBD_OK){
-        portion_size = (CDC_GetTxBufferSize() < length)? CDC_GetTxBufferSize():length;
-        memcpy(dt_buf, pData, portion_size);
-      }
+      if (CDC_IsTransmitterBusy() == 0){
 
-      rc = CDC_Transmit_FS(dt_buf, portion_size);
+        if (rc == USBD_OK){
+          portion_size = (CDC_GetTxBufferSize() < length)? CDC_GetTxBufferSize():length;
+          memcpy(dt_buf, pData, portion_size);
+        }
 
-      if (rc == USBD_OK) {
-        pData += portion_size;
-        dt_size += portion_size;
+        rc = CDC_Transmit_FS(dt_buf, portion_size);
+
+        if (rc == USBD_OK) {
+          pData += portion_size;
+          dt_size += portion_size;
+        }else{
+          /* EP busy ?*/
+          HAL_Delay(1);
+        }
       }else{
         /* EP busy ?*/
         HAL_Delay(1);

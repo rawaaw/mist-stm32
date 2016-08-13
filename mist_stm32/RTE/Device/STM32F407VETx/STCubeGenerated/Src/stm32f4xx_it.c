@@ -208,7 +208,7 @@ void EXTI0_IRQHandler(void)
   if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET)
   {
     __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_0);
-    PS2_Kbd_Interrupt();
+    PS2_kbd_interrupt();
     return;
   }
 

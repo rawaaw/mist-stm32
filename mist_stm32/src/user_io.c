@@ -749,7 +749,7 @@ void user_io_poll() {
     // as this likely means that the user is reloading the core via jtag
     unsigned char ct;
     static unsigned char ct_cnt = 0;
-    
+
     EnableIO();
     ct = SPI(0xff);
     DisableIO();

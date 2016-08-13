@@ -57,6 +57,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "debug.h"
 #include "mist_cfg.h"
 #include "cdc_enumerate.h"
+#if defined MIST_STM32
+#include "ps2.h"
+#endif
 
 const char version[] = {"$VER:ATH" VDATE};
 
@@ -99,7 +102,7 @@ void HandleFpga(void) {
   UpdateDriveStatus();
 }
 
-extern void inserttestfloppy();
+extern void inserttestfloppy(void);
 #if !defined MIST_STM32
 int main(void)
 {
@@ -191,12 +194,29 @@ int main_stm32(void){
     /*usb_cdc_open(); ??? cdc_control_open() calls inside cdc_control_open() */
 
     while (1) {
+#if defined MIST_STM32
+      uint8_t ps2ch, modifier, rd_pos, rc;
+      t_ps2_kbd_report*rep;
+#endif
+
       cdc_control_poll();
 
       user_io_poll();
 
 #if !defined MIST_STM32
       usb_poll();
+#endif
+
+#if defined MIST_STM32
+      if ((rd_pos = PS2_kbd_get_hid_buf(&modifier, &ps2ch)) != 0xFF){
+#if 0
+        sprintf(prtbuf, "HID: modifier:%.2X code:%.2X\r\n", modifier, ps2ch);
+        prtbufsize = strlen(prtbuf);
+        HAL_UART_Transmit_IT(&huart1, prtbuf, prtbufsize);
+#endif
+        rep = PS2_kbd_get_hid_buf_entry(rd_pos);
+        user_io_kbd(rep->key_rep_arr[0], rep->key_rep_arr + 2, UIO_PRIORITY_KEYBOARD);
+      }
 #endif
 
       // MIST (atari) core supports the same UI as Minimig

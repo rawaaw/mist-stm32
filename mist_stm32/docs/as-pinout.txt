@@ -24,4 +24,4 @@ SPI_SCK (stm SCK)  PB13   clk4     M2    blue
 SPI_SS2            PC5    clk3     T9    green
 SPI_SS3            PB0    clk2     R9    yellow
 SPI_SS4            PB1    clk1     T8    orange
-CONF_DATA0         PB2    clk0     R8    red
+CONF_DATA0         PC4    clk0     R8    red

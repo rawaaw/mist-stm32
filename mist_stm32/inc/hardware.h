@@ -116,7 +116,7 @@ void TIMER_wait(unsigned long ms);
 
 void USART_Poll(void);
 
-#ifdef FPGA3
+#if defined FPGA3 || defined MIST_STM32
 // the MiST has the user inout on the arm controller
 void EnableIO(void);
 void DisableIO(void);

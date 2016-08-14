@@ -17,6 +17,11 @@ void spi_init(void) {
 
     // Configure pins for SPI use
     AT91C_BASE_PIOA->PIO_PDR = AT91C_PA14_SPCK | AT91C_PA13_MOSI | AT91C_PA12_MISO;
+#else
+    DisableFpga();
+    DisableOsd();
+    DisableIO();
+    DisableDMode();
 #endif
 }
 
@@ -98,12 +103,16 @@ void DisableIO(void) {
 void EnableDMode(void) {
 #if !defined MIST_STM32
   *AT91C_PIOA_CODR = FPGA2;    // enable FPGA2 output
+#else
+  HAL_GPIO_WritePin(SS4_SD_DIRECT_GPIO_Port, SS4_SD_DIRECT_Pin, GPIO_PIN_RESET);
 #endif
 }
 
 void DisableDMode(void) {
 #if !defined MIST_STM32
   *AT91C_PIOA_SODR = FPGA2;    // disable FPGA2 output
+#else
+  HAL_GPIO_WritePin(SS4_SD_DIRECT_GPIO_Port, SS4_SD_DIRECT_Pin, GPIO_PIN_SET);
 #endif
 }
 

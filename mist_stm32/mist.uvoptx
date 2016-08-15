@@ -211,41 +211,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>193</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134328720</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/main.c\193</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>753</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134339928</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\user_io.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/user_io.c\753</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
           <LineNumber>189</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134336076</Address>
+          <Address>134332912</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -257,75 +225,11 @@
           <Expression>\\mist_stm32\src/stm32_stubs.c\189</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>454</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134227608</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\fpga.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/fpga.c\454</Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>293</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134296914</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\wpjrunner\jrunner_stm32.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/wpjrunner/jrunner_stm32.c\293</Expression>
-        </Bp>
-        <Bp>
-          <Number>5</Number>
-          <Type>0</Type>
-          <LineNumber>252</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134226202</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\wpjrunner\jrunner_stm32.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/wpjrunner/jrunner_stm32.c\252</Expression>
-        </Bp>
-        <Bp>
-          <Number>6</Number>
-          <Type>0</Type>
-          <LineNumber>346</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134227288</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\fpga.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/fpga.c\346</Expression>
-        </Bp>
-        <Bp>
-          <Number>7</Number>
+          <Number>1</Number>
           <Type>0</Type>
           <LineNumber>73</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134315526</Address>
+          <Address>134312458</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -337,11 +241,11 @@
           <Expression>\\mist_stm32\src/cdc_control.c\73</Expression>
         </Bp>
         <Bp>
-          <Number>8</Number>
+          <Number>2</Number>
           <Type>0</Type>
           <LineNumber>127</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134302234</Address>
+          <Address>134299742</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -353,11 +257,11 @@
           <Expression>\\mist_stm32\RTE/Device/STM32F407VETx/STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c\127</Expression>
         </Bp>
         <Bp>
-          <Number>9</Number>
+          <Number>3</Number>
           <Type>0</Type>
           <LineNumber>131</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134302244</Address>
+          <Address>134299752</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -369,11 +273,11 @@
           <Expression>\\mist_stm32\RTE/Device/STM32F407VETx/STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c\131</Expression>
         </Bp>
         <Bp>
-          <Number>10</Number>
+          <Number>4</Number>
           <Type>0</Type>
           <LineNumber>135</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134302254</Address>
+          <Address>134299762</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -384,12 +288,44 @@
           <ExecCommand></ExecCommand>
           <Expression>\\mist_stm32\RTE/Device/STM32F407VETx/STCubeGenerated/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c\135</Expression>
         </Bp>
+        <Bp>
+          <Number>5</Number>
+          <Type>0</Type>
+          <LineNumber>346</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\src\fpga.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>6</Number>
+          <Type>0</Type>
+          <LineNumber>454</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\src\fpga.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
       </Breakpoint>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
-          <SubType>0</SubType>
-          <ItemText>SDCardInfo</ItemText>
+          <SubType>8</SubType>
+          <ItemText>s</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>

@@ -187,12 +187,7 @@ int main_stm32(void){
     // parse mist.ini
     mist_ini_parse();
 
-/* --> */
-    /*  fpga_init(NULL); */
-#warning !!! stub !!! (fpga_init must be uncommented)
-    user_io_detect_core_type();
-    user_io_detect_core_type();
-/*<-- */
+    fpga_init(NULL);
 
     cdc_control_open();
 

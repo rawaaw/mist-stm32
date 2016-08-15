@@ -23,6 +23,10 @@
 
 #include "ps2.h"
 
+#if defined MIST_STM32
+extern SD_HandleTypeDef hsd;
+#endif
+
 // up to 16 key can be remapped
 #define MAX_REMAP  16
 unsigned char key_remap_table[MAX_REMAP][2];
@@ -154,7 +158,7 @@ void user_io_init() {
   if(user_io_menu_button()) DEBUG_MODE_VAR = DEBUG_MODE ? 0 : DEBUG_MODE_VALUE;
   iprintf("debug_mode = %d\n", DEBUG_MODE);
 #else
-#warning var access by hardcoded address !!!!
+#warning DEBUG_MODE macro access by hardcoded address !!!!
   iprintf("debug_mode (DEBUG_MODE_VAR ???) = %d\n", 0);
 #endif
 
@@ -441,8 +445,19 @@ void user_io_sd_set_config(void) {
   unsigned char data[33];
 
   // get CSD and CID from SD card
+#if !defined MIST_STM32
   MMC_GetCID(data);
   MMC_GetCSD(data+16);
+#else
+  HAL_SD_CardInfoTypedef card_info;
+  HAL_SD_ErrorTypedef rc;
+  rc = HAL_SD_Get_CardInfo(&hsd, &card_info);
+  if (rc != SD_OK){
+    FatalError(7);
+  }
+  memcpy(data, hsd.CID, 16);
+  memcpy(data + 16, hsd.CSD, 16);
+#endif
   // byte 32 is a generic config byte
   data[32] = MMC_IsSDHC()?1:0;
 
@@ -1269,7 +1284,12 @@ void user_io_poll() {
 }
 
 char user_io_dip_switch1() {
+#if !defined MIST_STM32
   return(((adc_state & 2)?1:0) || DEBUG_MODE);
+#else
+#warning DEBUG_MODE macro access by hardcoded address !!!!
+  return(((adc_state & 2)?1:0) /*|| DEBUG_MODE*/);
+#endif
 }
 
 char user_io_menu_button() {

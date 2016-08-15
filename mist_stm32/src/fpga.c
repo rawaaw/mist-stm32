@@ -297,7 +297,7 @@ RAMFUNC unsigned char ConfigureFpga(char *name)
 #endif
 
     if(!name)
-      name = "CORE1   RBF";
+      name = "CORE    RBF";
 
     // open bitstream file
     if (FileOpen(&file, name) == 0)
@@ -949,6 +949,7 @@ void fpga_init(char *name) {
 
     unsigned char ct;
 
+#if defined MIST_STM32_JTAG
     if (ConfigureFpga(name)) {
       time = GetTimer(0) - time;
       iprintf("FPGA configured in %lu ms\r", time >> 20);
@@ -956,6 +957,7 @@ void fpga_init(char *name) {
       iprintf("FPGA configuration failed\r");
       FatalError(8); // 3
     }
+#endif
 
     // wait max 100 msec for a valid core type
     time = GetTimer(100);

@@ -260,6 +260,8 @@ unsigned long CheckButton(void)
 #else
     return user_io_menu_button();
 #endif
+#else
+    return 0;
 #endif
 }
 

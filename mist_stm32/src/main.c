@@ -209,12 +209,15 @@ int main_stm32(void){
 
 #if defined MIST_STM32
       if ((rd_pos = PS2_kbd_get_hid_buf(&modifier, &ps2ch)) != 0xFF){
-#if 0
-        sprintf(prtbuf, "HID: modifier:%.2X code:%.2X\r\n", modifier, ps2ch);
-        prtbufsize = strlen(prtbuf);
-        HAL_UART_Transmit_IT(&huart1, prtbuf, prtbufsize);
+#if 1
+        iprintf("HID: modifier:%.2X code:%.2X\r\n", modifier, ps2ch);
+//        prtbufsize = strlen(prtbuf);
+//        HAL_UART_Transmit_IT(&huart1, prtbuf, prtbufsize);
 #endif
         rep = PS2_kbd_get_hid_buf_entry(rd_pos);
+        if (ps2ch == 0x44){
+          iprintf("F11 pressed\r\n");
+        }
         user_io_kbd(rep->key_rep_arr[0], rep->key_rep_arr + 2, UIO_PRIORITY_KEYBOARD);
       }
 #endif

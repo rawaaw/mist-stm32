@@ -15,6 +15,7 @@ uint8_t StateJoyGetExtra (uint8_t joy_num){
   return 0;
 }
 
+#if 0
 uint8_t StateKeyboardModifiers (void){
   return 0;
 }
@@ -23,6 +24,7 @@ void StateKeyboardPressed (uint8_t *pressed){
   *pressed = 0;
   return;
 }
+#endif
 
 uint8_t StateNumJoysticks (void){
   return 0;
@@ -56,9 +58,11 @@ void StateJoySet (uint8_t c, uint8_t joy_num){
   return;
 }
 
+#if 0
 void StateKeyboardSet (uint8_t modifier, uint8_t* pressed, uint16_t* pressed_ps2){
   return;
 }
+#endif
 
 void StateJoySetExtra (uint8_t c, uint8_t joy_num){
   return;
@@ -159,7 +163,8 @@ void usb_cdc_open(void) {
 //* \brief Test if the device is configured
 //*----------------------------------------------------------------------------
 uchar usb_cdc_is_configured(void) {
-  return (CDC_IsTransmitterBusy() != -1); /* -1 means CDC is not initialized */
+  return 0;
+//  return (CDC_IsTransmitterBusy() != -1); /* -1 means CDC is not initialized */
 }
 
 uint16_t usb_cdc_read(char *pData, uint16_t length) {

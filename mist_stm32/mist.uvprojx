@@ -779,6 +779,11 @@
               <FilePath>.\src\Retarget.c</FilePath>
             </File>
             <File>
+              <FileName>state.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\state.c</FilePath>
+            </File>
+            <File>
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\spi.c</FilePath>

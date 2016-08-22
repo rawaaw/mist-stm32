@@ -58,6 +58,7 @@ void DisableFpga(void)
     spi_wait4xfer_end();
     *AT91C_PIOA_SODR = FPGA0;  // set output
 #else
+    spi_wait4xfer_end();
     HAL_GPIO_WritePin(SS2_FPGA_GPIO_Port, SS2_FPGA_Pin, GPIO_PIN_SET);
 #endif
 }

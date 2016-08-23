@@ -211,9 +211,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>1628</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134335858</Address>
+          <LineNumber>624</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134334758</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -222,14 +222,30 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\src\user_io.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/user_io.c\1628</Expression>
+          <Expression>\\mist_stm32\src/user_io.c\624</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
+          <LineNumber>1628</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>134335862</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\user_io.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\\src/user_io.c\1628</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
           <LineNumber>73</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134312630</Address>
+          <Address>134312634</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -241,11 +257,11 @@
           <Expression>\\mist_stm32\src/cdc_control.c\73</Expression>
         </Bp>
         <Bp>
-          <Number>2</Number>
+          <Number>3</Number>
           <Type>0</Type>
           <LineNumber>719</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>134280336</Address>
+          <Address>134280340</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -257,11 +273,11 @@
           <Expression>\\mist_stm32\src/osd.c\719</Expression>
         </Bp>
         <Bp>
-          <Number>3</Number>
+          <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>1326</LineNumber>
+          <LineNumber>664</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134327330</Address>
+          <Address>134334908</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -270,23 +286,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\src\user_io.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\mist_stm32\src/user_io.c\1326</Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>604</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\src\menu.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>\\mist_stm32\src/user_io.c\664</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>
